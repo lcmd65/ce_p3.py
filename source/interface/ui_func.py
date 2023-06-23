@@ -7,3 +7,6 @@ def sequence(*functions):
             return_value = function(*args, **kwargs)
         return return_value
     return func
+
+def functionProcessing():
+    return

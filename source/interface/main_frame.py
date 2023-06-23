@@ -5,7 +5,7 @@ import tksheet
 import meta.external_var
 from tkinter import *
 from tkinter.ttk import *
-from interface.function import *
+from interface.ui_func import *
 from functools import partial
 from backend.function.function_database import *
 from backend.function.function_compare import *
