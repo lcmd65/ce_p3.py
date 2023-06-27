@@ -1,6 +1,6 @@
 
 ## function compare by tranfer PLC data to Natural Languge data
-def compare(value_por, value_actual, priority):
+def compareParameter(value_por, value_actual, priority):
     str_temp = value_por.value
     if (str(value_por.value) == str(value_actual.value))\
         or (str(value_por.value) == 'Check' and str(value_actual.value) == '1')\
@@ -27,7 +27,7 @@ def compare(value_por, value_actual, priority):
     else:
         return 0
 
-def compare_string(value_por, value_actual, priority):
+def compareString(value_por, value_actual, priority):
     str_temp = value_por
     if (str(value_por) == str(value_actual))\
     or (str(value_por) == 'Check' and str(value_actual) == '1')\

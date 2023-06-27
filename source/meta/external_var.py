@@ -3,3 +3,7 @@ signal_loop = 1
 
 root = None
 root_temp = None
+
+username = None
+password = None
+
