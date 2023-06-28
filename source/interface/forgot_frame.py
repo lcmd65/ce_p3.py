@@ -1,4 +1,5 @@
 import tkinter
+import meta.external_var
 from tkinter import *
 
 class ForgotFrame(Frame):
@@ -9,5 +10,7 @@ class ForgotFrame(Frame):
         
     def initUI(self):
         self.parent.title = "Forgot Password"
+        
+        label = Label(self, i = meta.external_var.bg)
         
         
