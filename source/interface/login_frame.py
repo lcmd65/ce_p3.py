@@ -27,7 +27,7 @@ class LoginFrame(Frame):
         meta.external_var.password = entry_password.get()
         
         if self.connnectUserInfo() == False:
-            messagebox.show("Wrong password or username")
+            messagebox.showerror("Wrong password or username")
         else:
             meta.external_var.root.destroy()
             meta.external_var.root = Tk()
@@ -57,7 +57,7 @@ class LoginFrame(Frame):
         
         tab0 = Frame(tab_control)
         tab0.pack(fill = X, side = TOP, padx=0,  pady=20)
-        tab_control.add(tab0, text = "LOGIN", padding= 40)
+        tab_control.add(tab0, text = "LOGIN", padding= 5)
         
         frame5 = Frame(tab0)
         frame5.pack(fill =X, padx = 10, pady =20, side =BOTTOM)
@@ -80,7 +80,8 @@ class LoginFrame(Frame):
         label_password.pack(side = TOP, padx =5, pady =5)
         
         entry_password = Entry(frame4)
-        entry_password.pack(fill = X, padx = 5, pady = 5)    
+        entry_password.pack(fill = X, padx = 5, pady = 5)
+        entry_password.config(show="*")
         
         button_login = Button(frame5, text = "Sign In", command= partial(self.eventClickButtonLogin, entry_account, entry_password))
         button_login.pack(side = RIGHT, fill = BOTH, padx =5 ,pady =5)
