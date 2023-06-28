@@ -1,6 +1,6 @@
 import tkinter
 from tkinter import *
-from interface.function import sequence
+from interface.ui_func import sequence
 import meta.external_var
 
 class LoopFrame(Frame):

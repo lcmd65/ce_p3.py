@@ -1,16 +1,17 @@
 
-import threading
-from tkinter import messagebox
-import tksheet 
 import meta.external_var
+import threading
+import tksheet 
 from tkinter import *
 from tkinter.ttk import *
-from interface.ui_func import *
-from functools import partial
-from backend.function.function_database import *
-from backend.function.function_compare import *
+from tkinter import messagebox
+from interface.ui_func import sequence
 from interface.loop_frame import LoopFrame
+from functools import partial
 from PIL import Image, ImageTk
+import backend.function.database as database
+import backend.function.compare as compare
+
 
 
 ## UI of Laser python CE P3
@@ -21,7 +22,7 @@ class MainFrame(Frame):
         self.initUI()
     
     def processingCal(self, txt,type_check):
-        processing_type(type_check)
+        database.processingConsistOfType(type_check)
         txt.insert('1.0', "process successful ")
     
     def eventStateCheckThread(self, txt,type_check):
@@ -56,18 +57,18 @@ class MainFrame(Frame):
         temp_1.join()
 
     def eventViewData(self, txt, sheet, type_check):
-                df = processing_unpush(type_check)
+                df = database.processingUnpush(type_check)
                 sheet.set_sheet_data(data = df.values.tolist(),\
                     reset_col_positions = True,\
                     reset_row_positions = True,\
                     redraw = True,\
                     verify = False,\
                     reset_highlights = False)
-                self.eventTriggerDatarigger(sheet)
+                self.eventTriggerData(sheet)
 
     def eventTriggerData(self, sheet_temp):
         for i in range(sheet_temp.get_total_rows()):
-            if compare_string(sheet_temp.get_cell_data(i, 3, return_copy = True), \
+            if compare.compareString(sheet_temp.get_cell_data(i, 3, return_copy = True), \
             sheet_temp.get_cell_data(i, 7,  return_copy = True), \
             sheet_temp.get_cell_data(i, 4,  return_copy = True)) == 0:
                 sheet_temp.highlight_cells(row = i,\
@@ -88,7 +89,7 @@ class MainFrame(Frame):
         self.parent.title("CE LASER P3")
         self.pack(fill=BOTH, expand=True)
         
-        label = Label(self, i= ImageTk.PhotoImage(Image.open('data/images/FS_image.png')))
+        label = Label(self, i= meta.external_var.bg)
         label.pack()
         
         # Tab
@@ -138,13 +139,13 @@ class MainFrame(Frame):
         txt = Text(frame2a, bg ="#fcfcfc", height= 2)
         txt.pack(fill=BOTH, pady=0, padx=5, expand=True)
     
-        Button_tab1_1 = Button(frame1a, text="Laser P3 Tracking", width=10, command = sequence(partial(self.processingCal, txt, "A")))
+        Button_tab1_1 = Button(frame1a, text="Laser P3 Tracking", width=25, command = sequence(partial(self.processingCal, txt, "A")))
         Button_tab1_1.pack(side=LEFT, padx=5, pady=5)
-        Button_tab1_2 = Button(frame1a, text="End Auto", width=10, command = sequence(self.eventExitRoot))
-        Button_tab1_2.pack(side=RIGHT, padx=5, pady=5)
-        Button_tab1_3 = Button(frame1a, text="Auto", width =10,  command = sequence(partial(self.eventClickedFunctionAppScheduleThread, txt, "A")))
-        Button_tab1_3.pack(side=RIGHT, padx=5, pady=5)
-        Button_tab1_4 = Button(frame1a, text="View", width =10, command= partial(self.eventViewData,txt,sheet1, "A"))
+        Button_tab1_2 = Button(frame1a, text="End Auto", width=25, command = sequence(self.eventExitRoot))
+        Button_tab1_2.pack(side=LEFT, padx=5, pady=5)
+        Button_tab1_3 = Button(frame1a, text="Auto", width =25,  command = sequence(partial(self.eventClickedFunctionAppScheduleThread, txt, "A")))
+        Button_tab1_3.pack(side=LEFT, padx=5, pady=5)
+        Button_tab1_4 = Button(frame1a, text="View", width =25, command= partial(self.eventViewData,txt,sheet1, "A"))
         Button_tab1_4.pack(side=LEFT, padx=5, pady=5)
         
         # P3B
@@ -162,13 +163,13 @@ class MainFrame(Frame):
         
         text_b = Text(frame2b,  height= 2)
         text_b.pack(fill = X)
-        Button_tab2_1 = Button(frame1b, text="Laser P3 Tracking", width =10, command = partial(self.processingCal,text_b, "B"))
+        Button_tab2_1 = Button(frame1b, text="Laser P3 Tracking", width =25, command = partial(self.processingCal,text_b, "B"))
         Button_tab2_1.pack(side =LEFT, padx=5, pady=5)
-        Button_tab2_2 = Button(frame1b, text="End Auto", width =10, command= self.eventExitRoot)
-        Button_tab2_2.pack(side =RIGHT, padx=5, pady=5)
-        Button_tab2_3 = Button(frame1b, text="Auto", width =10,  command = sequence(partial(self.eventClickedFunctionAppScheduleThread, text_b, "B")))
-        Button_tab2_3.pack(side=RIGHT, padx=5, pady=5)
-        Button_tab2_4 = Button(frame1b, text="View", width =10, command= partial(self.eventViewData, text_b, sheet2, "B"))
+        Button_tab2_2 = Button(frame1b, text="End Auto", width =25, command= self.eventExitRoot)
+        Button_tab2_2.pack(side=LEFT, padx=5, pady=5)
+        Button_tab2_3 = Button(frame1b, text="Auto", width =25,  command = sequence(partial(self.eventClickedFunctionAppScheduleThread, text_b, "B")))
+        Button_tab2_3.pack(side=LEFT, padx=5, pady=5)
+        Button_tab2_4 = Button(frame1b, text="View", width =25, command= partial(self.eventViewData, text_b, sheet2, "B"))
         Button_tab2_4.pack(side =LEFT, padx=5, pady=5)
         # P3C
         
@@ -187,13 +188,22 @@ class MainFrame(Frame):
         text_c = Text(frame2c,  height= 2)
         text_c.pack(fill =X)
         
-        Button_tab3_1 = Button(frame1c, text="Laser P3 Tracking", width =10, command = partial(self.processingCal,text_c, "C"))
+        Button_tab3_1 = Button(frame1c, text="Laser P3 Tracking", width =25, command = partial(self.processingCal,text_c, "C"))
         Button_tab3_1.pack(side =LEFT, padx=5, pady=5)
-        Button_tab3_2 = Button(frame1c, text="End Auto", width =10, command = self.eventExitRoot)
-        Button_tab3_2.pack(side =RIGHT, padx=5, pady=5)
-        Button_tab3_3 = Button(frame1c, text="Auto", width =10,  command = sequence(partial(self.eventClickedFunctionAppScheduleThread, text_c, "C")))
-        Button_tab3_3.pack(side=RIGHT, padx=5, pady=5)
-        Button_tab3_4 = Button(frame1c, text="View", width =10, command= partial(self.eventViewData,text_c, sheet3, "C"))
+        Button_tab3_2 = Button(frame1c, text="End Auto", width =25, command = self.eventExitRoot)
+        Button_tab3_2.pack(side=LEFT, padx=5, pady=5)
+        Button_tab3_3 = Button(frame1c, text="Auto", width =25,  command = sequence(partial(self.eventClickedFunctionAppScheduleThread, text_c, "C")))
+        Button_tab3_3.pack(side=LEFT, padx=5, pady=5)
+        Button_tab3_4 = Button(frame1c, text="View", width =25, command= partial(self.eventViewData,text_c, sheet3, "C"))
         Button_tab3_4.pack(side =LEFT, padx=5, pady=5)
 
 # python3 interface/ui.py
+
+if __name__ == "__main__":
+    meta.external_var.root = Tk()
+    meta.external_var.bg = ImageTk.PhotoImage(Image.open('data/images/FS_image.png'))
+    meta.external_var.root.geometry('1200x600+200+200') 
+    app = MainFrame(meta.external_var.root)
+    meta.external_var.root.mainloop()
+    
+# python3 interface/main_frame.py

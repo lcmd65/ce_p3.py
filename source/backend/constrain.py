@@ -14,8 +14,11 @@ TABLE_CONTROL_PLAN_C ='LASER_P3_CONTROL_PLAN_C'
 USER = 'sa'
 PASSWORD = 'Password.1'
 
-excel_file = r'raw_data/LASER_CE.xlsx'
-xml_globals = r'raw_data/P3C globals.xml'
-xml_recipe = r'raw_data/S6 plus P3_EL V3 268.xml'
+DB_USER = 'USERS_DB'
+TABLE_USER = 'USERS'
+
+excel_file = r'data/LASER_CE.xlsx'
+xml_globals = r'data/P3C globals.xml'
+xml_recipe = r'data/S6 plus P3_EL V3 268.xml'
 size = 377
 size_df =370
