@@ -4,6 +4,8 @@ signal_loop = 1
 root = None
 root_temp = None
 bg = None
+logo =None
+
 username = None
 password = None
 

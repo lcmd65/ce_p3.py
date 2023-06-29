@@ -52,12 +52,15 @@ class LoginFrame(Frame):
         label.pack(fill = BOTH, side = BOTTOM)
         
         tab_control = Notebook(label,  height= 300, width= 250)
-        tab_control.pack(expand = False, anchor= "center", padx =400, pady =225, ipadx = 50, ipady =50)
-        
+        tab_control.pack(expand = False, anchor= "center", padx =400, pady = 300, ipadx = 10, ipady=75 )
         
         tab0 = Frame(tab_control, width= 100)
         tab0.pack(fill = X, side = TOP, padx=0,  pady=20)
         tab_control.add(tab0, text = "LOGIN", padding= 5)
+        
+        
+        frame6 = Frame(tab0)
+        frame6.pack(fill =X, padx = 10, pady =20, side =TOP)
         
         frame5 = Frame(tab0)
         frame5.pack(fill =X, padx = 10, pady =20, side =BOTTOM)
@@ -87,7 +90,10 @@ class LoginFrame(Frame):
         button_login.pack(side = RIGHT, fill = BOTH, padx =5 ,pady =5)
 
         button_forgot = Button(frame5, text = "Forgot password", command = self.eventClickButtonForgotPass)
-        button_forgot.pack(side = TOP, padx= 5, pady =5) 
+        button_forgot.pack(side = LEFT,fill = BOTH, padx= 5, pady =5) 
+        
+        label_logo = Label(frame6, i= meta.external_var.logo)
+        label_logo.pack(fill = BOTH, side = TOP)
         
         
         
