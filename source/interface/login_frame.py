@@ -51,16 +51,18 @@ class LoginFrame(Frame):
         label = Label(self, i= meta.external_var.bg)
         label.pack(fill = BOTH, side = BOTTOM)
         
-        tab_control = Notebook(label,  height= 300, width= 250)
+        tab_control = Notebook(label,  height= 400, width= 250)
         tab_control.pack(expand = False, anchor= "center", padx =400, pady = 300, ipadx = 10, ipady=75 )
         
         tab0 = Frame(tab_control, width= 100)
         tab0.pack(fill = X, side = TOP, padx=0,  pady=20)
-        tab_control.add(tab0, text = "LOGIN", padding= 5)
+        tab_control.add(tab0, padding= 5)
         
         
         frame6 = Frame(tab0)
-        frame6.pack(fill =X, padx = 10, pady =20, side =TOP)
+        frame6.pack(fill =X,padx = 110, pady =10, side =TOP)
+        frame7 = Frame(tab0)
+        frame7.pack(fill =X,padx = 50, pady =10, side =TOP)
         
         frame5 = Frame(tab0)
         frame5.pack(fill =X, padx = 10, pady =20, side =BOTTOM)
@@ -73,13 +75,13 @@ class LoginFrame(Frame):
         frame1 = Frame(tab0)
         frame1.pack(fill =X, padx = 10, side =BOTTOM)
         
-        label_account = Label(frame1, text = "Username")
+        label_account = Label(frame1, text = "Username", font = ("Calibri", 11))
         label_account.pack(side = TOP, padx =5, pady =5)
         
         entry_account = Entry(frame2)
         entry_account.pack(fill = X , padx =5, pady =5)
         
-        label_password = Label(frame3, text = "Password")
+        label_password = Label(frame3, text = "Password", font =("Calibri", 11))
         label_password.pack(side = TOP, padx =5, pady =5)
         
         entry_password = Entry(frame4)
@@ -93,7 +95,10 @@ class LoginFrame(Frame):
         button_forgot.pack(side = LEFT,fill = BOTH, padx= 5, pady =5) 
         
         label_logo = Label(frame6, i= meta.external_var.logo)
-        label_logo.pack(fill = BOTH, side = TOP)
+        label_logo.pack(fill = BOTH, side = TOP, anchor= "center")
+        
+        label_password = Label(frame7, text = "LOGIN", font =("Calibri", 18, 'bold'))
+        label_password.pack(side = TOP)
         
         
         
