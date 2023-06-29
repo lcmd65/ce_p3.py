@@ -1,5 +1,7 @@
 import tkinter
 from tkinter import *
+import backend.constrain
+import meta.external_var
 
 class ForgotFrame(Frame):
     def __init__(self, parent):
@@ -9,5 +11,8 @@ class ForgotFrame(Frame):
         
     def initUI(self):
         self.parent.title = "Forgot Password"
+        
+        label = Label(self, i = meta.external_var.bg)
+        label.pack()
         
         
