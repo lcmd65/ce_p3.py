@@ -89,9 +89,22 @@ class LaserFrame(Frame):
         
         label = Label(self, i= meta.external_var.bg)
         label.pack()
+
+        button_bar = Frame(label)
+        button_bar.pack(side = TOP, fill= BOTH)
+        
+        button_bar1 = Button(button_bar, text= "File", width= 15)
+        button_bar1.pack(side = LEFT)
+        
+        button_bar2 = Button(button_bar, text= "Edit", width= 15)
+        button_bar2.pack(side = LEFT)
+        
+        button_bar3 = Button(button_bar, text= "Help", width= 15)
+        button_bar3.pack(side = LEFT)
         
         # Tab
         tab_control = Notebook(label)
+        tab_control.pack(expand= True, fill=BOTH, padx=40, pady= 0)
         
         tab0 = Frame(tab_control)
         tab0.pack(side= LEFT, padx=0, pady=5)
@@ -107,8 +120,6 @@ class LaserFrame(Frame):
         tab_control.add(tab2, text='P3B')
         tab_control.add(tab3, text='P3C')
         
-        tab_control.pack(expand= True, fill=BOTH, padx=40, pady= 0)
-          
         canvas1 = Canvas(tab0)
         canvas1.pack(fill = BOTH, expand= 1)
         canvas1.create_image( 0, 0,  anchor = "nw")
@@ -200,7 +211,7 @@ if __name__ == "__main__":
     meta.external_var.root = Tk()
     meta.external_var.bg = ImageTk.PhotoImage(Image.open('data/images/FS_image.png'))
     meta.external_var.root.geometry('1200x600+200+200') 
-    app = MainFrame(meta.external_var.root)
+    app = LaserFrame(meta.external_var.root)
     meta.external_var.root.mainloop()
     
-# python3 interface/main_frame.py
+# python interface/laser_frame.py

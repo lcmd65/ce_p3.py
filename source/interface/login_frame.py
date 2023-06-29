@@ -4,7 +4,6 @@ from tkinter import messagebox
 from interface.laser_frame import LaserFrame
 from interface.forgot_frame import ForgotFrame
 from functools import partial
-from json import loads
 import backend.function.user_authen as user_authen
 from PIL import Image, ImageTk
 import meta.external_var
