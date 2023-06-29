@@ -45,7 +45,7 @@ class LoginFrame(Frame):
         self.parent.title("Copy Exactly Laser")
         self.pack(fill =BOTH, expand = True)
         
-        label_privacy = Label(self, text = "First Solar Privacy @2022", font=("Roboto", 12, "bold"))
+        label_privacy = Label(self, text = "First Solar privacy @2022", font=("Roboto", 12, "bold"))
         label_privacy.pack(side = BOTTOM, fill = BOTH)
         
         label = Label(self, i= meta.external_var.bg)
