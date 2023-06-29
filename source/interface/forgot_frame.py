@@ -24,6 +24,7 @@ class ForgotFrame(Frame):
                     try:
                         backend.function.user_authen.changePass(account_str, email_str, newpass_str)
                         messagebox.showinfo(message="Password changed")
+                        meta.external_var.root_temp.destroy()
                     except Exception as e:
                         messagebox.showerror(message= e)
                     return

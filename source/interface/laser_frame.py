@@ -55,14 +55,14 @@ class LaserFrame(Frame):
         temp_1.join()
 
     def eventViewData(self, txt, sheet, type_check):
-                df = database.processingUnpush(type_check)
-                sheet.set_sheet_data(data = df.values.tolist(),\
+        df = database.processingUnpush(type_check)
+        sheet.set_sheet_data(data = df.values.tolist(),\
                     reset_col_positions = True,\
                     reset_row_positions = True,\
                     redraw = True,\
                     verify = False,\
                     reset_highlights = False)
-                self.eventTriggerData(sheet)
+        self.eventTriggerData(sheet)
 
     def eventTriggerData(self, sheet_temp):
         for i in range(sheet_temp.get_total_rows()):
@@ -93,13 +93,13 @@ class LaserFrame(Frame):
         button_bar = Frame(label)
         button_bar.pack(side = TOP, fill= BOTH)
         
-        button_bar1 = Button(button_bar, text= "File", width= 15)
+        button_bar1 = Button(button_bar, text= "File", width= 10 ,background = None)
         button_bar1.pack(side = LEFT)
         
-        button_bar2 = Button(button_bar, text= "Edit", width= 15)
+        button_bar2 = Button(button_bar, text= "Edit", width= 10, background= None)
         button_bar2.pack(side = LEFT)
         
-        button_bar3 = Button(button_bar, text= "Help", width= 15)
+        button_bar3 = Button(button_bar, text= "Help", width= 10, background = None)
         button_bar3.pack(side = LEFT)
         
         # Tab
