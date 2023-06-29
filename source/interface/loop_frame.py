@@ -1,4 +1,3 @@
-import tkinter
 from tkinter import *
 from interface.ui_func import sequence
 import meta.external_var

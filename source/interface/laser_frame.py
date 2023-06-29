@@ -15,7 +15,7 @@ import backend.function.compare as compare
 
 
 ## UI of Laser python CE P3
-class MainFrame(Frame):
+class LaserFrame(Frame):
     def __init__(self, parent):
         Frame.__init__(self, parent)
         self.parent = parent
@@ -31,10 +31,8 @@ class MainFrame(Frame):
         t1.join()
         
     def eventStateCheck(self, txt,type_check):
-        try:
-            self.processingCal(txt,type_check)
-        except:
-            messagebox.showinfo(title= "CE Message", message ="Error in connect")
+        try: self.processingCal(txt,type_check)
+        except: messagebox.showinfo(title= "CE Message", message ="Error in connect")
             
     def eventLoopProcessing(self, txt, type_check):
         if meta.external_var.state_in_root_temp == "run":
@@ -105,9 +103,9 @@ class MainFrame(Frame):
         tab3.pack(side = LEFT, padx=0, pady=5)
         
         tab_control.add(tab0, text='HOME')
-        tab_control.add(tab1, text='Laser P3A')
-        tab_control.add(tab2, text='Laser P3B')
-        tab_control.add(tab3, text='Laser P3C')
+        tab_control.add(tab1, text='P3A')
+        tab_control.add(tab2, text='P3B')
+        tab_control.add(tab3, text='P3C')
         
         tab_control.pack(expand= True, fill=BOTH, padx=40, pady= 0)
           
@@ -116,7 +114,6 @@ class MainFrame(Frame):
         canvas1.create_image( 0, 0,  anchor = "nw")
         
         # HOME
-        
         frame_tab0_1 = Frame(canvas1)
         frame_tab0_1.pack(fill= X, padx=5 ,pady=5)
         

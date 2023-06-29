@@ -1,11 +1,11 @@
 from tkinter import *
 from tkinter.ttk import *
-from tkinter import PanedWindow, messagebox
-from interface.main_frame import MainFrame
+from tkinter import messagebox
+from interface.laser_frame import LaserFrame
 from interface.forgot_frame import ForgotFrame
 from functools import partial
+from json import loads
 import backend.function.user_authen as user_authen
-import backend.constrain
 from PIL import Image, ImageTk
 import meta.external_var
 
@@ -16,7 +16,6 @@ class LoginFrame(Frame):
         self.initUI()
     
     def connnectUserInfo(self):
-        
         if user_authen.authenticantionUser(meta.external_var.username, meta.external_var.password) == True:
             return True
         else:
@@ -27,25 +26,23 @@ class LoginFrame(Frame):
         meta.external_var.password = entry_password.get()
         
         if self.connnectUserInfo() == False:
-            messagebox.showerror("Wrong password or username")
+            messagebox.showinfo(message = "Wrong password or username")
         else:
             meta.external_var.root.destroy()
             meta.external_var.root = Tk()
             meta.external_var.bg = ImageTk.PhotoImage(Image.open('data/images/FS_image.png'))
             meta.external_var.root.geometry('1200x600+200+200') 
-            app = MainFrame(meta.external_var.root)
+            app = LaserFrame(meta.external_var.root)
             meta.external_var.root.mainloop()
         
     def eventClickButtonForgotPass(self):
         meta.external_var.root_temp = Toplevel()
-        meta.external_var.root_temp.geometry('1200x600+200+200') 
-        app = ForgotFrame(meta.external_var.root)
+        meta.external_var.root_temp.geometry('600x400+200+200') 
+        app = ForgotFrame(meta.external_var.root_temp)
         meta.external_var.root_temp.mainloop()
-        return
         
     ## init ui on frame
     def initUI(self):
-        
         self.parent.title("Copy Exactly Laser")
         self.pack(fill =BOTH, expand = True)
         
@@ -53,7 +50,10 @@ class LoginFrame(Frame):
         label.pack()
         
         tab_control = Notebook(label,  height= 300, width= 250)
-        tab_control.pack(expand = True, padx=450, pady= 225)
+        tab_control.pack(expand = True, padx=450, pady= 205)
+        
+        label_privacy = Label(label, text = "First Solar Privacy @2022", font=("Helvetica", 18, "bold"))
+        label_privacy.pack(side = BOTTOM, fill = BOTH, expand= True)
         
         tab0 = Frame(tab_control)
         tab0.pack(fill = X, side = TOP, padx=0,  pady=20)

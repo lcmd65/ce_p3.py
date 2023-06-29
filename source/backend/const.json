@@ -12,5 +12,12 @@
     "DRIVER": "SQL Server",
     "HOST": "localhost",
     "PORT": "1433",
-    "DB_PUSH": "TutorialDB"
+    "DB_PUSH": "TutorialDB",
+    "excel_file": "data/LASER_CE.xlsx",
+    "xml_globals": "data/P3C globals.xml",
+    "xml_recipe": "data/S6 plus P3_EL V3 268.xml",
+    "size": 377,
+    "size_df": 370,
+    "DB_USER": "USERS_DB",
+    "TABLE_USER": "USERS"
 }

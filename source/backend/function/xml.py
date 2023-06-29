@@ -1,7 +1,7 @@
 import xml.etree.cElementTree as ET
 from openpyxl.styles import PatternFill
 import backend.function.compare as cp
-import backend.constrain
+import backend.const
 
 
 redFill = PatternFill(start_color='ff0000', end_color='ff0000', fill_type='solid')
@@ -16,7 +16,7 @@ class xmlParam():
     def get_val(self):
         return self.__key_10
 
-class tool_value():
+class ToolValue():
     def __init__(self, item, value):
         self.__item = item
         self.__value = value
@@ -30,7 +30,7 @@ def parseParaXML(file_name, worksheet):
     root = parsed.getroot()
     List = []
     for step in root:
-        for i in range(7, backend.constrain.size):
+        for i in range(7, backend.const.jsonConst()["size"]):
             if step.attrib.get('guid') == worksheet.cell(row=i, column=20).value:
                 worksheet.cell(row=i, column=7).value = step[1].text
                 List.append(xmlParam(step.attrib.get("guid"), step.attrib.get("name"), step[1].text))
@@ -43,7 +43,7 @@ def parseParaXMLDB(file_name, df):
     root = parsed.getroot()
     List = []
     for step in root:
-        for i in range(backend.constrain.size_df):
+        for i in range(backend.const.jsonConst()["size_df"]):
             if step.attrib.get('guid') == df.iloc[i,6]:
                 df.iloc[i,7] = step[1].text
                 List.append(xmlParam(step.attrib.get("guid"), step.attrib.get("name"), step[1].text))
@@ -52,6 +52,6 @@ def parseParaXMLDB(file_name, df):
                 List.append(xmlParam(step.attrib.get("guid"), step.attrib.get("name"), step[1].text))
             
 def color_cell(worksheet):
-    for i in range(7, backend.constrain.size):
+    for i in range(7, backend.const.jsonConst()["size"]):
         if cp.compare(worksheet.cell(row =i, column =7), worksheet.cell(row =i, column =5), worksheet.cell(row =i, column =6)) == 0:
             worksheet.cell(row=i, column=7).fill = redFill
