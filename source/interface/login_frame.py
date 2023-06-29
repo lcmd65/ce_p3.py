@@ -97,7 +97,7 @@ class LoginFrame(Frame):
         label_logo = Label(frame6, i= meta.external_var.logo)
         label_logo.pack(fill = BOTH, side = TOP, anchor= "center")
         
-        label_password = Label(frame7, text = "LOGIN", font =("Calibri", 18, 'bold'))
+        label_password = Label(frame7, text = "Login", font =("Calibri", 12, 'bold'))
         label_password.pack(side = TOP)
         
         
