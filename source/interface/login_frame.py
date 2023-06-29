@@ -45,16 +45,17 @@ class LoginFrame(Frame):
         self.parent.title("Copy Exactly Laser")
         self.pack(fill =BOTH, expand = True)
         
+        label_privacy = Label(self, text = "First Solar Privacy @2022", font=("Roboto", 12, "bold"))
+        label_privacy.pack(side = BOTTOM, fill = BOTH)
+        
         label = Label(self, i= meta.external_var.bg)
-        label.pack()
+        label.pack(fill = BOTH, side = BOTTOM)
         
         tab_control = Notebook(label,  height= 300, width= 250)
-        tab_control.pack(expand = True, padx=450, pady= 205)
+        tab_control.pack(expand = False, anchor= "center", padx =400, pady =225, ipadx = 50, ipady =50)
         
-        label_privacy = Label(label, text = "First Solar Privacy @2022", font=("Helvetica", 18, "bold"))
-        label_privacy.pack(side = BOTTOM, fill = BOTH, expand= True)
         
-        tab0 = Frame(tab_control)
+        tab0 = Frame(tab_control, width= 100)
         tab0.pack(fill = X, side = TOP, padx=0,  pady=20)
         tab_control.add(tab0, text = "LOGIN", padding= 5)
         
