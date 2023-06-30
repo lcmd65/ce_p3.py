@@ -22,10 +22,8 @@ def compareParameter(value_por, value_actual, priority):
         or (str(value_actual.value) == None)\
         or (str(str_temp).replace(",", ".") == str(value_actual.value)): 
         return 1
-    elif priority.value == 'A':
-        return 1
-    else:
-        return 0
+    elif priority.value == 'A': return 1
+    else: return 0
 
 def compareString(value_por, value_actual, priority):
     str_temp = value_por
@@ -49,13 +47,8 @@ def compareString(value_por, value_actual, priority):
         or (str(value_actual) == None)\
         or (str(str_temp).replace(",", ".") == str(value_actual)): 
         return 1
-    elif value_actual.find(value_por) != -1:
-        return 1
-    elif value_por.lower() == value_actual.lower():
-        return 1
-    elif priority == 'A':
-        return 1
-    elif value_por == "None":
-        return 1
-    else:
-        return 0
+    elif value_actual.find(value_por) != -1: return 1
+    elif value_por.lower() == value_actual.lower(): return 1
+    elif priority == 'A': return 1
+    elif value_por == "None": return 1
+    else: return 0
