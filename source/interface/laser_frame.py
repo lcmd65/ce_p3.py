@@ -7,6 +7,7 @@ from tkinter.ttk import *
 from tkinter import messagebox
 from interface.ui_func import sequence
 from interface.loop_frame import LoopFrame
+from interface.edit_frame import EditFrame
 from functools import partial
 from PIL import Image, ImageTk
 import backend.function.database as database
@@ -80,8 +81,24 @@ class LaserFrame(Frame):
         meta.external_var.state_in_root_temp = 'end'
         meta.external_var.signal_loop = 0
                 
+    def eventClickExit(self):
+        meta.external_var.root.destroy()
+        from interface.login_frame import LoginFrame
+        meta.external_var.root = Tk()
+        meta.external_var.root.geometry('1200x1000+300+0') 
+        meta.external_var.bg = ImageTk.PhotoImage(Image.open('data/images/FS_image1.png').resize((1920, 1080)))
+        meta.external_var.logo = ImageTk.PhotoImage(Image.open('data/images/logo.png').resize((34, 30)))
+        app= LoginFrame(meta.external_var.root)
+        meta.external_var.root.mainloop()
+    
     def eventClickHome(self):
         return
+    
+    def eventButtonClickEdit(self):
+        meta.external_var.root_temp = Toplevel(meta.external_var.root)
+        meta.external_var.root_temp.geometry('600x800+200+200') 
+        app = EditFrame(meta.external_var.root_temp)
+        meta.external_var.root_temp.mainloop()
     
     def initUI(self):
         self.parent.title("CE LASER P3")
@@ -91,14 +108,14 @@ class LaserFrame(Frame):
         label.pack()
 
         button_bar = Frame(label)
-        button_bar.pack(side = TOP, fill= BOTH)
+        button_bar.pack(side = TOP, fill = BOTH)
         
+        button_bar0 = Button(button_bar, text= "Exit", width= 10 ,background = None, command= self.eventClickExit)
+        button_bar0.pack(side = LEFT)
         button_bar1 = Button(button_bar, text= "File", width= 10 ,background = None)
         button_bar1.pack(side = LEFT)
-        
-        button_bar2 = Button(button_bar, text= "Edit", width= 10, background= None)
+        button_bar2 = Button(button_bar, text= "Edit", width= 10, background= None, command= self.eventButtonClickEdit)
         button_bar2.pack(side = LEFT)
-        
         button_bar3 = Button(button_bar, text= "Help", width= 10, background = None)
         button_bar3.pack(side = LEFT)
         
@@ -204,14 +221,3 @@ class LaserFrame(Frame):
         Button_tab3_3.pack(side=LEFT, padx=5, pady=5)
         Button_tab3_4 = Button(frame1c, text="View", width =25, command= partial(self.eventViewData,text_c, sheet3, "C"))
         Button_tab3_4.pack(side =LEFT, padx=5, pady=5)
-
-# python3 interface/ui.py
-
-if __name__ == "__main__":
-    meta.external_var.root = Tk()
-    meta.external_var.bg = ImageTk.PhotoImage(Image.open('data/images/FS_image.png'))
-    meta.external_var.root.geometry('1200x600+200+200') 
-    app = LaserFrame(meta.external_var.root)
-    meta.external_var.root.mainloop()
-    
-# python interface/laser_frame.py

@@ -1,7 +1,6 @@
 from tkinter import *
 from tkinter.ttk import *
 from tkinter import messagebox
-from interface.laser_frame import LaserFrame
 from interface.forgot_frame import ForgotFrame
 from functools import partial
 import backend.function.user_authen as user_authen
@@ -27,6 +26,7 @@ class LoginFrame(Frame):
         if self.connnectUserInfo() == False:
             messagebox.showinfo(message = "Wrong password or username")
         else:
+            from interface.laser_frame import LaserFrame
             meta.external_var.root.destroy()
             meta.external_var.root = Tk()
             meta.external_var.bg = ImageTk.PhotoImage(Image.open('data/images/FS_image.png'))
@@ -52,7 +52,7 @@ class LoginFrame(Frame):
         label.pack(fill = BOTH, side = BOTTOM)
         
         tab_control = Notebook(label,  height= 400, width= 250)
-        tab_control.pack(expand = False, anchor= "center", padx =400, pady = 300, ipadx = 10, ipady=75 )
+        tab_control.pack(expand = False, anchor= "center", padx =400, pady = 175, ipadx = 10, ipady=100 )
         
         tab0 = Frame(tab_control, width= 100)
         tab0.pack(fill = X, side = TOP, padx=0,  pady=20)

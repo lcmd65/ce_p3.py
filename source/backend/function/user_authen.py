@@ -8,11 +8,11 @@ def dataframeUSER():
                         , database= backend.const.jsonConst()["DB_USER"]\
                         , user= backend.const.jsonConst()["USER"]\
                         , password= backend.const.jsonConst()["PASSWORD"])
-    if cnxn != None: print("PROCESS DATABASE: CONNECT SUCCESS", cnxn)
     cur = cnxn.cursor()
     cur.execute("SELECT * FROM " + backend.const.jsonConst()["TABLE_USER"])
     data = cur.fetchall()
     df = pd.DataFrame(data)
+    cnxn.close()
     return df
 
 def authenticantionUser(username, password):
@@ -21,7 +21,6 @@ def authenticantionUser(username, password):
                         , database= backend.const.jsonConst()["DB_USER"]\
                         , user= backend.const.jsonConst()["USER"]\
                         , password= backend.const.jsonConst()["PASSWORD"])
-    if cnxn != None: print("PROCESS DATABASE: CONNECT SUCCESS", cnxn)
     cur = cnxn.cursor()
     cur.execute("SELECT * FROM " + backend.const.jsonConst()["TABLE_USER"])
     data = cur.fetchall()
@@ -30,6 +29,7 @@ def authenticantionUser(username, password):
         if df.loc[index, 1] == username and df.loc[index, 3] == password:
             bool_var = True
             break
+    cnxn.close()
     return bool_var
 
 def changePass(username, email, password):
@@ -37,8 +37,8 @@ def changePass(username, email, password):
                         , database= backend.const.jsonConst()["DB_USER"]\
                         , user= backend.const.jsonConst()["USER"]\
                         , password= backend.const.jsonConst()["PASSWORD"])
-    print("PROCESS DATABASE: CONNECT SUCCESS", cnxn)
     cur = cnxn.cursor()
     temp = backend.const.jsonConst()['TABLE_USER']
     cur.execute(f"UPDATE {temp} SET PASS_WORD = '{password}' WHERE USER_NAME = '{username}' AND EMAIL = '{email}';")
     cnxn.commit()
+    cnxn.close()
