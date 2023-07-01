@@ -114,7 +114,7 @@ class LaserFrame(Frame):
         button_bars_commmand = [self.eventClickExit, None, self.eventButtonClickEdit, None]
         button_bars = [ None for _ in range(4)]
         for label, index, commands in zip(button_bars_text, range(4), button_bars_commmand):
-            button_bars[index] = tkmacosx.Button(button_bar, text = label, width= 20, command= commands, bg= None, image=None)
+            button_bars[index] = Button(button_bar, text = label, width= 20, command= commands, bg= None, image=None)
             button_bars[index].config(bg= None, bd=0)
             button_bars[index].pack(side = LEFT, fill = BOTH)
         
@@ -131,10 +131,10 @@ class LaserFrame(Frame):
         tab3 = Frame(tab_control)
         tab3.pack(side = LEFT, padx=0, pady=5)
         
-        tab_control.add(tab0, text='HOME')
-        tab_control.add(tab1, text='P3A')
-        tab_control.add(tab2, text='P3B')
-        tab_control.add(tab3, text='P3C')
+        tab_control.add(tab0, text='    HOME    ')
+        tab_control.add(tab1, text='      P3A      ')
+        tab_control.add(tab2, text='      P3B      ')
+        tab_control.add(tab3, text='      P3C      ')
         
         canvas1 = Canvas(tab0)
         canvas1.pack(fill = BOTH, expand= 1)
