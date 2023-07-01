@@ -6,6 +6,7 @@ from functools import partial
 import backend.function.user_authen as user_authen
 from PIL import Image, ImageTk
 import meta.external_var
+import tkmacosx 
 
 class LoginFrame(Frame):
     def __init__(self, parent):

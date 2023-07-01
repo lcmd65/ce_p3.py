@@ -87,7 +87,7 @@ def pushDatabaseActual(df,type):
     cursor.execute("SELECT * FROM " +backend.const.jsonConst()["TABLE_ACTUAL_A"])
     if type == "A":
         for index in range (backend.const.jsonConst()["size_df"]):
-            cursor.execute("""INSERT INTO """ +backend.const.jsonConst()["TABLE_ACTUAL_A "]+ """ (ITEM, CATALOG_NAME, PARA_NAME, POR_VALUE, PRIORITY_VALUE, TOOL_VALUE) VALUES (%s, %s, %s, %s, %s, %s)""",\
+            cursor.execute("""INSERT INTO """ +backend.const.jsonConst()["TABLE_ACTUAL_A"]+ """ (ITEM, CATALOG_NAME, PARA_NAME, POR_VALUE, PRIORITY_VALUE, TOOL_VALUE) VALUES (%s, %s, %s, %s, %s, %s)""",\
                 (str(df.iloc[index, 0]),\
                 str(df.iloc[index, 1]), \
                 str(df.iloc[index, 2]), \

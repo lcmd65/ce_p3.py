@@ -3,7 +3,7 @@ import meta.external_var
 import threading
 import tksheet 
 from tkinter import *
-from tkinter.ttk import *
+from tkinter import Button, ttk
 from tkinter import messagebox
 from interface.ui_func import sequence
 from interface.loop_frame import LoopFrame
@@ -12,6 +12,7 @@ from functools import partial
 from PIL import Image, ImageTk
 import backend.function.database as database
 import backend.function.compare as compare
+import tkmacosx 
 
 
 
@@ -82,6 +83,7 @@ class LaserFrame(Frame):
         meta.external_var.signal_loop = 0
                 
     def eventClickExit(self):
+        meta.external_var.root.destroy()
         from interface.login_frame import LoginFrame
         meta.external_var.root = Tk()
         meta.external_var.root.geometry('1200x1000+300+0') 
@@ -102,25 +104,23 @@ class LaserFrame(Frame):
     def initUI(self):
         self.parent.title("CE LASER P3")
         self.pack(fill=BOTH, expand=True)
+        label_root = Label(self, i= meta.external_var.bg, bg = None)
+        label_root.pack()
         
-        label = Label(self, i= meta.external_var.bg)
-        label.pack()
-
-        button_bar = Frame(label)
-        button_bar.pack(side = TOP, fill = BOTH)
-        
-        button_bar0 = Button(button_bar, text= "Exit", width= 10 ,background = None, command= self.eventClickExit)
-        button_bar0.pack(side = LEFT)
-        button_bar1 = Button(button_bar, text= "File", width= 10 ,background = None)
-        button_bar1.pack(side = LEFT)
-        button_bar2 = Button(button_bar, text= "Edit", width= 10, background= None, command= self.eventButtonClickEdit)
-        button_bar2.pack(side = LEFT)
-        button_bar3 = Button(button_bar, text= "Help", width= 10, background = None)
-        button_bar3.pack(side = LEFT)
+        button_bar = Frame(label_root)
+        button_bar.config(bg= None)
+        button_bar.pack(side = TOP, fill = X)
+        button_bars_text = ["Exit", "File", "Edit", "Help"]
+        button_bars_commmand = [self.eventClickExit, None, self.eventButtonClickEdit, None]
+        button_bars = [ None for _ in range(4)]
+        for label, index, commands in zip(button_bars_text, range(4), button_bars_commmand):
+            button_bars[index] = tkmacosx.Button(button_bar, text = label, width= 20, command= commands, bg= None, image=None)
+            button_bars[index].config(bg= None, bd=0)
+            button_bars[index].pack(side = LEFT, fill = BOTH)
         
         # Tab
-        tab_control = Notebook(label)
-        tab_control.pack(expand= True, fill=BOTH, padx=40, pady= 0)
+        tab_control = ttk.Notebook(label_root)
+        tab_control.pack(expand= True, fill=BOTH, padx=5, pady= 20)
         
         tab0 = Frame(tab_control)
         tab0.pack(side= LEFT, padx=0, pady=5)
@@ -220,3 +220,11 @@ class LaserFrame(Frame):
         Button_tab3_3.pack(side=LEFT, padx=5, pady=5)
         Button_tab3_4 = Button(frame1c, text="View", width =25, command= partial(self.eventViewData,text_c, sheet3, "C"))
         Button_tab3_4.pack(side =LEFT, padx=5, pady=5)
+
+if __name__ == "__main__":
+    meta.external_var.root = Tk()
+    meta.external_var.root.geometry('1200x1000+300+0') 
+    meta.external_var.bg = ImageTk.PhotoImage(Image.open('data/images/FS_image1.png').resize((1920, 1080)))
+    meta.external_var.logo = ImageTk.PhotoImage(Image.open('data/images/logo.png').resize((34, 30)))
+    app= LaserFrame(meta.external_var.root)
+    meta.external_var.root.mainloop()
