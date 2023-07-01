@@ -3,6 +3,7 @@ from tkinter import messagebox
 from functools import partial
 from interface.ui_func import stopAllProcesingToFile
 import backend.const
+import threading
 
 
 class EditFrame(Frame):
@@ -18,6 +19,11 @@ class EditFrame(Frame):
         except Exception as e:
             print(e)
         messagebox.showinfo(title="Message", message="Success")
+    
+    def eventButtonChangeVariableClickThread(self, text, entries):
+        t1 = threading.Thread(target=self.eventButtonChangeVariableClick(text, entries), )
+        t1.start()
+        t1.join()
         
     def initUI(self):
         self.parent.title("EDIT SYSTEM PATH")
@@ -62,5 +68,11 @@ class EditFrame(Frame):
             frames[index].pack(side =TOP, fill = X, pady =5)
         
         frame_main[2].pack(side = BOTTOM)
-        button1 = Button(frame_main[2], text = "OK", width= 20, command = partial(self.eventButtonChangeVariableClick, text_label, entries))
+        button1 = Button(frame_main[2], text = "OK", width= 20, command = partial(self.eventButtonChangeVariableClickThread, text_label, entries))
         button1.pack(side = RIGHT, pady = 20)
+
+if __name__ == "__main__":
+    root = Tk()
+    root.geometry("600x600+200+200")
+    app = EditFrame(root)
+    root.mainloop()

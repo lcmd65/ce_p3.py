@@ -82,7 +82,6 @@ class LaserFrame(Frame):
         meta.external_var.signal_loop = 0
                 
     def eventClickExit(self):
-        meta.external_var.root.destroy()
         from interface.login_frame import LoginFrame
         meta.external_var.root = Tk()
         meta.external_var.root.geometry('1200x1000+300+0') 
