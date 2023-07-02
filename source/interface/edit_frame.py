@@ -12,6 +12,7 @@ class EditFrame(Frame):
         self.parent = parent
         self.initUI()
         
+    # button ok in Frame
     def eventButtonChangeVariableClick(self, text, entries):
         try:
             for index in range(len(entries)):
@@ -20,6 +21,7 @@ class EditFrame(Frame):
             print(e)
         messagebox.showinfo(title="Message", message="Success")
     
+    # thread to prevent Deamon Thread error
     def eventButtonChangeVariableClickThread(self, text, entries):
         t1 = threading.Thread(target=self.eventButtonChangeVariableClick(text, entries), )
         t1.start()
@@ -37,11 +39,11 @@ class EditFrame(Frame):
             frame_main[index] = Frame(self)
             frame_main[index].pack(fill = BOTH, padx = 20,  pady = 20)
             
-        # frame 1
-        label1 = Label(frame_main[0], text = "Path & Environment variable Configuration", font = ("Roboto", 14, "bold"))
-        label1.pack(side= LEFT)
+        # frame config label
+        label_info = Label(frame_main[0], text = "Path & Environment variable Configuration", font = ("Roboto", 14, "bold"))
+        label_info.pack(side= LEFT)
         
-        # frame 2
+        # frame 2 (body frame)
         panel_button = PanedWindow(frame_main[1], orient="vertical")
         panel_button.pack(fill = X)
         

@@ -135,7 +135,7 @@ class LaserFrame(Frame):
             tab_controls[index] = Frame(notebook_control)
             tab_controls[index].pack(side= LEFT, padx=0, pady=5)
             notebook_control.add(tab_controls[index], text = label_text)
-            if index >=1:
+            if index != 0: # except home tab
                 body_controls[index] = [None for _ in range(3)]
                 button_controls[index] =[None for _ in range(4)]
                 temp = self.tranferString(index)
