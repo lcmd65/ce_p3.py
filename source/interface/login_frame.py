@@ -6,7 +6,7 @@ from functools import partial
 import backend.function.user_authen as user_authen
 from PIL import Image, ImageTk
 import meta.external_var
-import tkmacosx 
+
 
 class LoginFrame(Frame):
     def __init__(self, parent):
@@ -31,7 +31,7 @@ class LoginFrame(Frame):
             meta.external_var.root.destroy()
             meta.external_var.root = Tk()
             meta.external_var.bg = ImageTk.PhotoImage(Image.open('data/images/FS_image.png'))
-            meta.external_var.root.geometry('1200x600+200+200') 
+            meta.external_var.root.geometry('1200x1000+300+0') 
             app = LaserFrame(meta.external_var.root)
             meta.external_var.root.mainloop()
         

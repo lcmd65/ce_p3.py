@@ -3,8 +3,7 @@ import meta.external_var
 import threading
 import tksheet 
 from tkinter import *
-from tkinter import Button, ttk
-from tkinter import messagebox
+from tkinter import Button, ttk, messagebox
 from interface.ui_func import sequence
 from interface.loop_frame import LoopFrame
 from interface.edit_frame import EditFrame
@@ -101,130 +100,69 @@ class LaserFrame(Frame):
         app = EditFrame(meta.external_var.root_temp)
         meta.external_var.root_temp.mainloop()
     
+    def tranferString(self, key):
+        if key == 1: return "A"
+        elif key == 2: return "B"
+        elif key == 3: return "C"
+        
     def initUI(self):
         self.parent.title("CE LASER P3")
         self.pack(fill=BOTH, expand=True)
+        
         label_root = Label(self, i= meta.external_var.bg, bg = None)
         label_root.pack()
         
-        button_bar = Frame(label_root)
-        button_bar.config(bg= None)
+        button_bar = Frame(label_root, bg= None)
         button_bar.pack(side = TOP, fill = X)
-        button_bars_text = ["Exit", "File", "Edit", "Help"]
-        button_bars_commmand = [self.eventClickExit, None, self.eventButtonClickEdit, None]
         button_bars = [ None for _ in range(4)]
-        for label, index, commands in zip(button_bars_text, range(4), button_bars_commmand):
-            button_bars[index] = Button(button_bar, text = label, width= 20, command= commands, bg= None, image=None)
+        for index, label_text, commands in zip(range(4), ["Exit", "File", "Edit", "Help"], [self.eventClickExit, None, self.eventButtonClickEdit, None]):
+            button_bars[index] = Button(button_bar, text = label_text, width= 10, command= commands, bg= None, image=None)
             button_bars[index].config(bg= None, bd=0)
             button_bars[index].pack(side = LEFT, fill = BOTH)
         
-        # Tab
-        tab_control = ttk.Notebook(label_root)
-        tab_control.pack(expand= True, fill=BOTH, padx=5, pady= 20)
+        # Notebook include tab home, laser P3A to C
+        notebook_control = ttk.Notebook(label_root)
+        notebook_control.pack(expand= True, fill=BOTH, padx=5, pady= 20)
         
-        tab0 = Frame(tab_control)
-        tab0.pack(side= LEFT, padx=0, pady=5)
-        tab1 = Frame(tab_control)
-        tab1.pack(side= LEFT, padx=0, pady=5)
-        tab2 = Frame(tab_control)
-        tab2.pack(side= LEFT, padx=0, pady=5)
-        tab3 = Frame(tab_control)
-        tab3.pack(side = LEFT, padx=0, pady=5)
+        # init tab control 
+        tab_controls = [None for _ in range(4)]
+        body_controls = [None for _ in range(4)]
+        button_controls = [None for _ in range(4)]
+        text_controls = [None for _ in range(4)]
+        sheet_controls = [None for _ in range(4)]
         
-        tab_control.add(tab0, text='    HOME    ')
-        tab_control.add(tab1, text='      P3A      ')
-        tab_control.add(tab2, text='      P3B      ')
-        tab_control.add(tab3, text='      P3C      ')
-        
-        canvas1 = Canvas(tab0)
-        canvas1.pack(fill = BOTH, expand= 1)
-        canvas1.create_image( 0, 0,  anchor = "nw")
-        
-        # HOME
-        frame_tab0_1 = Frame(canvas1)
-        frame_tab0_1.pack(fill= X, padx=5 ,pady=5)
-        
-        Button_tab0_0 = Button(frame_tab0_1, text="Analyze", width=10, command = sequence(self.eventClickHome))
-        Button_tab0_0.pack(side=LEFT, padx=5, pady=5)
-        
-        # P3A
-        frame1a = Frame(tab1)
-        frame1a.pack(fill=X)
-        frame2a = Frame(tab1)
-        frame2a.pack(fill=X)
-        frame3a = Frame(tab1)
-        frame3a.pack(side= LEFT, fill=Y, pady=5, padx =5)
-        
-        sheet1 =tksheet.Sheet(frame3a, data = [[]], height = 800, width = 1500)
-        sheet1.pack(fill=BOTH, pady=10, padx=5, expand=True)
-        sheet1.grid(row =20, column = 20,sticky="nswe")
-        sheet1.enable_bindings()
-        
-        txt = Text(frame2a, bg ="#fcfcfc", height= 2)
-        txt.pack(fill=BOTH, pady=0, padx=5, expand=True)
-    
-        Button_tab1_1 = Button(frame1a, text="Laser P3 Tracking", width=25, command = sequence(partial(self.processingCal, txt, "A")))
-        Button_tab1_1.pack(side=LEFT, padx=5, pady=5)
-        Button_tab1_2 = Button(frame1a, text="End Auto", width=25, command = sequence(self.eventExitRoot))
-        Button_tab1_2.pack(side=LEFT, padx=5, pady=5)
-        Button_tab1_3 = Button(frame1a, text="Auto", width =25,  command = sequence(partial(self.eventClickedFunctionAppScheduleThread, txt, "A")))
-        Button_tab1_3.pack(side=LEFT, padx=5, pady=5)
-        Button_tab1_4 = Button(frame1a, text="View", width =25, command= partial(self.eventViewData,txt,sheet1, "A"))
-        Button_tab1_4.pack(side=LEFT, padx=5, pady=5)
-        
-        # P3B
-        frame1b = Frame(tab2)
-        frame1b.pack(fill=X)
-        frame2b = Frame(tab2)
-        frame2b.pack(fill=X)
-        frame3b = Frame(tab2)
-        frame3b.pack(side= LEFT, fill=Y, pady=5, padx =5)
-        
-        sheet2 =tksheet.Sheet(frame3b, data = [[]], height = 800, width = 1500)
-        sheet2.pack(fill=BOTH, pady=10, padx=5, expand=True)
-        sheet2.grid(row =20, column = 20,sticky="nswe")
-        sheet2.enable_bindings()
-        
-        text_b = Text(frame2b,  height= 2)
-        text_b.pack(fill = X)
-        Button_tab2_1 = Button(frame1b, text="Laser P3 Tracking", width =25, command = partial(self.processingCal,text_b, "B"))
-        Button_tab2_1.pack(side =LEFT, padx=5, pady=5)
-        Button_tab2_2 = Button(frame1b, text="End Auto", width =25, command= self.eventExitRoot)
-        Button_tab2_2.pack(side=LEFT, padx=5, pady=5)
-        Button_tab2_3 = Button(frame1b, text="Auto", width =25,  command = sequence(partial(self.eventClickedFunctionAppScheduleThread, text_b, "B")))
-        Button_tab2_3.pack(side=LEFT, padx=5, pady=5)
-        Button_tab2_4 = Button(frame1b, text="View", width =25, command= partial(self.eventViewData, text_b, sheet2, "B"))
-        Button_tab2_4.pack(side =LEFT, padx=5, pady=5)
-        # P3C
-        
-        frame1c = Frame(tab3)
-        frame1c.pack(fill=X)
-        frame2c = Frame(tab3)
-        frame2c.pack(fill=X)
-        frame3c = Frame(tab3)
-        frame3c.pack(side= LEFT, fill=Y, pady=5, padx =5)
-        
-        sheet3 =tksheet.Sheet(frame3c, data = [[]], height = 800, width = 1500)
-        sheet3.pack(fill=BOTH, pady=10, padx=5, expand=True)
-        sheet3.grid(row =20, column = 20,sticky="nswe")
-        sheet3.enable_bindings()
-        
-        text_c = Text(frame2c,  height= 2)
-        text_c.pack(fill =X)
-        
-        Button_tab3_1 = Button(frame1c, text="Laser P3 Tracking", width =25, command = partial(self.processingCal,text_c, "C"))
-        Button_tab3_1.pack(side =LEFT, padx=5, pady=5)
-        Button_tab3_2 = Button(frame1c, text="End Auto", width =25, command = self.eventExitRoot)
-        Button_tab3_2.pack(side=LEFT, padx=5, pady=5)
-        Button_tab3_3 = Button(frame1c, text="Auto", width =25,  command = sequence(partial(self.eventClickedFunctionAppScheduleThread, text_c, "C")))
-        Button_tab3_3.pack(side=LEFT, padx=5, pady=5)
-        Button_tab3_4 = Button(frame1c, text="View", width =25, command= partial(self.eventViewData,text_c, sheet3, "C"))
-        Button_tab3_4.pack(side =LEFT, padx=5, pady=5)
-
-if __name__ == "__main__":
-    meta.external_var.root = Tk()
-    meta.external_var.root.geometry('1200x1000+300+0') 
-    meta.external_var.bg = ImageTk.PhotoImage(Image.open('data/images/FS_image1.png').resize((1920, 1080)))
-    meta.external_var.logo = ImageTk.PhotoImage(Image.open('data/images/logo.png').resize((34, 30)))
-    app= LaserFrame(meta.external_var.root)
-    meta.external_var.root.mainloop()
+        for index, label_text in zip(range(4), ['    HOME    ', '      P3A      ', '      P3B      ','      P3C      ']):
+            tab_controls[index] = Frame(notebook_control)
+            tab_controls[index].pack(side= LEFT, padx=0, pady=5)
+            notebook_control.add(tab_controls[index], text = label_text)
+            if index >=1:
+                body_controls[index] = [None for _ in range(3)]
+                button_controls[index] =[None for _ in range(4)]
+                temp = self.tranferString(index)
+                for se_index in range(3):
+                    body_controls[index][se_index] = Frame(tab_controls[index])
+                    body_controls[index][se_index].pack(fill =X)
+                
+                # sheet view of each laser tab
+                sheet_controls[index] = tksheet.Sheet(body_controls[index][2], data = [[]], height = 800, width = 1500)
+                sheet_controls[index].pack(fill=BOTH, pady=10, padx=5, expand=True)
+                sheet_controls[index].grid(row =20, column = 20,sticky="nswe")
+                sheet_controls[index].enable_bindings()
+                
+                # text information view of each laser tab
+                text_controls[index] =  Text(body_controls[index][1], bg ="#fcfcfc", height= 2)
+                text_controls[index].pack(fill=BOTH, pady=0, padx=5, expand=True)
+                
+                for se_index, button_text, commands in zip(range(4), ["Machine CE Monitor", "View CE", "Auto Monitor", "End Auto"], \
+                        [partial(self.processingCal, text_controls[index] , temp),\
+                        partial(self.eventViewData, text_controls[index] , sheet_controls[index], temp),\
+                        partial(self.eventClickedFunctionAppScheduleThread, text_controls[index] , temp), \
+                        self.eventExitRoot]):
+                    button_controls[index][se_index] = Button(body_controls[index][0], text= button_text, width=25, command = commands)
+                    button_controls[index][se_index].pack(side=LEFT, padx=5, pady=5)
+            
+            elif index ==0:
+                body_controls[index] = Frame(tab_controls[index])
+                body_controls[index].pack(fill= X, padx=5 ,pady=5)
+                button_controls[index] = Button(body_controls[index], text="Analyze", width=10, command = sequence(self.eventClickHome))
+                button_controls[index].pack(side=LEFT, padx=5, pady=5)
