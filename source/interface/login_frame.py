@@ -23,17 +23,19 @@ class LoginFrame(Frame):
     def eventClickButtonLogin(self, entry_account, entry_password):
         meta.external_var.username = entry_account.get()
         meta.external_var.password = entry_password.get()
-        
-        if self.connnectUserInfo() == False:
-            messagebox.showinfo(message = "Wrong password or username")
-        else:
-            from interface.laser_frame import LaserFrame
-            meta.external_var.root.destroy()
-            meta.external_var.root = Tk()
-            meta.external_var.bg = ImageTk.PhotoImage(Image.open('data/images/FS_image.png'))
-            meta.external_var.root.geometry('1200x1000+300+0') 
-            app = LaserFrame(meta.external_var.root)
-            meta.external_var.root.mainloop()
+        try:
+            if self.connnectUserInfo() == False:
+                messagebox.showinfo(message = "Wrong password or username")
+            else:
+                from interface.laser_frame import LaserFrame
+                meta.external_var.root.destroy()
+                meta.external_var.root = Tk()
+                meta.external_var.bg = ImageTk.PhotoImage(Image.open('data/images/FS_image.png'))
+                meta.external_var.root.geometry('1200x1000+300+0') 
+                app = LaserFrame(meta.external_var.root)
+                meta.external_var.root.mainloop()
+        except:
+            messagebox.showerror(message= "Connection False")
         
     def eventClickButtonForgotPass(self):
         meta.external_var.root_temp = Toplevel()
