@@ -66,11 +66,11 @@ class LaserFrame(Frame):
         self.eventTriggerData(sheet)
 
     def eventTriggerData(self, sheet_temp):
-        for i in range(sheet_temp.get_total_rows()):
-            if compare.compareString(sheet_temp.get_cell_data(i, 3, return_copy = True), \
-            sheet_temp.get_cell_data(i, 7,  return_copy = True), \
-            sheet_temp.get_cell_data(i, 4,  return_copy = True)) == 0:
-                sheet_temp.highlight_cells(row = i,\
+        for index in range(sheet_temp.get_total_rows()):
+            if compare.compareString(sheet_temp.get_cell_data(index, 3, return_copy = True), \
+            sheet_temp.get_cell_data(index, 7,  return_copy = True), \
+            sheet_temp.get_cell_data(index, 4,  return_copy = True)) == 0:
+                sheet_temp.highlight_cells(row = index,\
                 column = 7,\
                 bg = "Red",\
                 fg = None,\
@@ -92,6 +92,7 @@ class LaserFrame(Frame):
         meta.external_var.root.mainloop()
     
     def eventClickHome(self):
+        
         return
     
     def eventButtonClickEdit(self):
@@ -138,7 +139,6 @@ class LaserFrame(Frame):
             if index != 0: # except home tab
                 body_controls[index] = [None for _ in range(3)]
                 button_controls[index] =[None for _ in range(4)]
-                temp = self.tranferString(index)
                 for se_index in range(3):
                     body_controls[index][se_index] = Frame(tab_controls[index])
                     body_controls[index][se_index].pack(fill =X)
@@ -146,19 +146,23 @@ class LaserFrame(Frame):
                 # sheet view of each laser tab
                 sheet_controls[index] = tksheet.Sheet(body_controls[index][2], data = [[]], height = 800, width = 1500)
                 sheet_controls[index].pack(fill=BOTH, pady=10, padx=5, expand=True)
-                sheet_controls[index].grid(row =20, column = 20,sticky="nswe")
+                sheet_controls[index].grid(row =20, column = 20, sticky="nswe")
                 sheet_controls[index].enable_bindings()
                 
                 # text information view of each laser tab
                 text_controls[index] =  Text(body_controls[index][1], bg ="#fcfcfc", height= 2)
                 text_controls[index].pack(fill=BOTH, pady=0, padx=5, expand=True)
                 
-                for se_index, button_text, commands in zip(range(4), ["Machine CE Monitor", "View CE", "Auto Monitor", "End Auto"], \
-                        [partial(self.processingCal, text_controls[index] , temp),\
-                        partial(self.eventViewData, text_controls[index] , sheet_controls[index], temp),\
-                        partial(self.eventClickedFunctionAppScheduleThread, text_controls[index] , temp), \
-                        self.eventExitRoot]):
-                    button_controls[index][se_index] = Button(body_controls[index][0], text= button_text, width=25, command = commands)
+                temp = self.tranferString(index)
+                commands = [
+                    partial(self.processingCal, text_controls[index], temp),
+                    partial(self.eventViewData, text_controls[index], sheet_controls[index], temp),
+                    partial(self.eventClickedFunctionAppScheduleThread, text_controls[index], temp),
+                    partial(self.eventExitRoot),
+                ]
+                
+                for se_index, button_text, command_ in zip(range(4), ["Machine CE Monitor", "View CE", "Auto Monitor", "End Auto"], commands):
+                    button_controls[index][se_index] = Button(body_controls[index][0], text= button_text, width=25, command = command_)
                     button_controls[index][se_index].pack(side=LEFT, padx=5, pady=5)
             
             elif index ==0:

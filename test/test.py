@@ -1,20 +1,8 @@
-#server test
-#table test 
-test_db = "Tutorial_test"
-control_test = "Control_plan_test"
+import tkinter as tk
 
-def test_db(size_testcase):
-    control_db_test = []
-    for i in range(size_testcase):
-        control_db_test[i] = (control_test + "_" +i).ToString()
-    return control_db_test
+root = tk.Tk()
 
+button = tk.Button(root, text="Click me!", bg=None, bd=0)
+button.pack()
 
-def db_connect_test(function_test, db_test):
-    for i in range (db_test.size()):
-        try:
-            function_test(db_test[i])
-        except:
-            
-    
-
+root.mainloop()

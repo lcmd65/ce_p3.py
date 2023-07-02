@@ -1,8 +1,9 @@
 import meta.external_var
 from tkinter import Tk
 from interface.login_frame import LoginFrame
+from interface import *
 from PIL import Image, ImageTk
-
+import pdb
 def main():
     meta.external_var.root = Tk()
     meta.external_var.root.geometry('1200x1000+300+0') 
@@ -13,3 +14,4 @@ def main():
 
 if __name__ == "__main__" :
     main()
+    pdb.set_trace()
