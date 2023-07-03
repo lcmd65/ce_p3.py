@@ -1,11 +1,17 @@
 from tkinter import *
+from functools import partial 
 import meta.external_var
+import email
 
 class HelpFrame(Frame):
     def __init__(self, parent):
         Frame.__init__(self, parent)
         self.parent = parent
         self.initUI()
+    
+    def eventClickButtonOK(self, text):
+        
+        return
     
     def initUI(self):
         self.parent.title("Help")
@@ -16,12 +22,17 @@ class HelpFrame(Frame):
         label_body = Label(self, i = meta.external_var.bg)
         label_body.pack()
         
-        frame_body = Frame(label_body)
-        frame_body.pack(fill = X)
+        frame_body = [None for _ in range(3)]
+        for index in range(3):
+            frame_body[index] = Frame(label_body)
+            frame_body[index].pack(fill = X)
         
-        text = Text(frame_body)
-        text.insert(0, "please send email to dat.lemindast@gmail.com")
-        text.pack(fill= X, side =LEFT)
+        text1 = Text(frame_body[0], height= 5)
+        text1.insert(0, "please send email to dat.lemindast@gmail.com")
+        text1.pack(fill= X, side =LEFT)
         
+        text2 = Text(frame_body[1])
+        text2.pack(fill = BOTH)
         
-        
+        button = Button(frame_body[2], text = "OK", width= 10, command = partial(self.eventClickButtonOK, text2))
+        button.pack(side = RIGHT)
