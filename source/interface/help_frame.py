@@ -1,4 +1,5 @@
 from tkinter import *
+from tkinter import messagebox
 from functools import partial 
 import meta.external_var
 import email
@@ -10,8 +11,12 @@ class HelpFrame(Frame):
         self.initUI()
     
     def eventClickButtonOK(self, text):
-        
-        return
+        try:
+            content = text.get()
+            email_content = email("dat.lemindast@gmail.com", content)
+            email_content.send()
+        except Exception as e:
+            messagebox.showerror(message = e)
     
     def initUI(self):
         self.parent.title("Help")
