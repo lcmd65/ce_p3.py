@@ -5,7 +5,7 @@ class HelpFrame(Frame):
     def __init__(self, parent):
         Frame.__init__(self, parent)
         self.parent = parent
-        self
+        self.initUI()
     
     def initUI(self):
         self.parent.title("Help")
@@ -20,7 +20,8 @@ class HelpFrame(Frame):
         frame_body.pack(fill = X)
         
         text = Text(frame_body)
-        text.insert(0, "pleas send email to dat.lemindast@gmail.com")
-        text.pack(fill= X, side = LEFT)
+        text.insert(0, "please send email to dat.lemindast@gmail.com")
+        text.pack(fill= X, side =LEFT)
+        
         
         

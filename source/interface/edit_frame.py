@@ -12,7 +12,7 @@ class EditFrame(Frame):
         self.parent = parent
         self.initUI()
         
-    # button ok in Frame
+    # button OK Click in Frame
     def eventButtonChangeVariableClick(self, text, entries):
         try:
             for index in range(len(entries)):
@@ -20,6 +20,7 @@ class EditFrame(Frame):
         except Exception as e:
             print(e)
         messagebox.showinfo(title="Message", message="Success")
+        self.destroy()
     
     # thread to prevent Deamon Thread error
     def eventButtonChangeVariableClickThread(self, text, entries):
@@ -47,13 +48,14 @@ class EditFrame(Frame):
         panel_button = PanedWindow(frame_main[1], orient="vertical")
         panel_button.pack(fill = X)
         
+        # text label view of parameter
         text_label = ["DRIVER",\
-            "HOST",\
-            "PORT",\
-            "USER",\
-            "PASSWORD",\
-            "DB_GET",\
-            "DB_PUSH"]
+                    "HOST",\
+                    "PORT",\
+                    "USER",\
+                    "PASSWORD",\
+                    "DB_GET",\
+                    "DB_PUSH"]
         
         labels = [None for _ in range(7) ]
         entries = [None for _ in range(7) ]

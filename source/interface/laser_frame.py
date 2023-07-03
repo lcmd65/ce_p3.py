@@ -56,7 +56,7 @@ class LaserFrame(Frame):
         temp_1 = threading.Thread(target= self.eventClickedFunctionAppSchedule(txt, type_check), )
         temp_1.start()
         temp_1.join()
-
+    
     def eventViewData(self, txt, sheet, type_check):
         df = database.processingUnpush(type_check)
         sheet.set_sheet_data(data = df.values.tolist(),\
@@ -66,7 +66,7 @@ class LaserFrame(Frame):
                     verify = False,\
                     reset_highlights = False)
         self.eventTriggerData(sheet)
-
+    
     def eventTriggerData(self, sheet_temp):
         for index in range(sheet_temp.get_total_rows()):
             if compare.compareString(sheet_temp.get_cell_data(index, 3, return_copy = True), \
@@ -82,7 +82,8 @@ class LaserFrame(Frame):
     def eventExitRoot(self):
         meta.external_var.state_in_root_temp = 'end'
         meta.external_var.signal_loop = 0
-                
+        meta.external_var.root_temp.destroy()
+    
     def eventClickExit(self):
         if meta.external_var.roll == "A":
             try:
@@ -119,7 +120,7 @@ class LaserFrame(Frame):
         if key == 1: return "A"
         elif key == 2: return "B"
         elif key == 3: return "C"
-        
+    
     def initUI(self):
         self.parent.title("CE LASER P3")
         self.pack(fill=BOTH, expand=True)
