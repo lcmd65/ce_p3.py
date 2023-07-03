@@ -1,4 +1,3 @@
-
 import meta.external_var
 import threading
 import tksheet 
@@ -13,8 +12,6 @@ from PIL import Image, ImageTk
 import backend.function.database as database
 import backend.function.compare as compare
 import tkmacosx 
-
-
 
 ## UI of Laser python CE P3
 class LaserFrame(Frame):
@@ -168,6 +165,7 @@ class LaserFrame(Frame):
                 text_controls[index] =  Text(body_controls[index][1], bg ="#fcfcfc", height= 2)
                 text_controls[index].pack(fill=BOTH, pady=0, padx=5, expand=True)
                 
+                # get type of machine data connect: A, B, C
                 temp = self.tranferString(index)
                 commands = [
                     partial(self.processingCal, text_controls[index], temp),
@@ -175,11 +173,9 @@ class LaserFrame(Frame):
                     partial(self.eventClickedFunctionAppScheduleThread, text_controls[index], temp),
                     partial(self.eventExitRoot),
                 ]
-                
                 for se_index, button_text, command_ in zip(range(4), ["Machine CE Monitor", "View CE", "Auto Monitor", "End Auto"], commands):
                     button_controls[index][se_index] = Button(body_controls[index][0], text= button_text, width=25, command = command_)
                     button_controls[index][se_index].pack(side=LEFT, padx=5, pady=5)
-            
             elif index ==0:
                 body_controls[index] = Frame(tab_controls[index])
                 body_controls[index].pack(fill= X, padx=5 ,pady=5)

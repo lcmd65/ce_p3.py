@@ -7,24 +7,17 @@ import backend.function.user_authen as user_authen
 from PIL import Image, ImageTk
 import meta.external_var
 
-
 class LoginFrame(Frame):
     def __init__(self, parent):
         Frame.__init__(self, parent)
         self.parent = parent
         self.initUI()
     
-    def connnectUserInfo(self):
-        if user_authen.authenticantionUser(meta.external_var.username, meta.external_var.password) == True:
-            return True
-        else:
-            return False
-    
     def eventClickButtonLogin(self, entry_account, entry_password):
         meta.external_var.username = entry_account.get()
         meta.external_var.password = entry_password.get()
         try:
-            if self.connnectUserInfo() == False:
+            if user_authen.authenticantionUser(meta.external_var.username, meta.external_var.password) == False:
                 messagebox.showinfo(message = "Wrong password or username")
             else:
                 from interface.laser_frame import LaserFrame
