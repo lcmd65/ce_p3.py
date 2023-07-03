@@ -35,7 +35,7 @@ class LoginFrame(Frame):
                 app = LaserFrame(meta.external_var.root)
                 meta.external_var.root.mainloop()
         except:
-            messagebox.showerror(message= "Connection False")
+            messagebox.showerror(title= "Connection Error", message= "Connection False")
         
     def eventClickButtonForgotPass(self):
         meta.external_var.root_temp = Toplevel()

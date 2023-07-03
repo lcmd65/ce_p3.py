@@ -7,6 +7,7 @@ from tkinter import Button, ttk, messagebox
 from interface.ui_func import sequence
 from interface.loop_frame import LoopFrame
 from interface.edit_frame import EditFrame
+from interface.help_frame import HelpFrame
 from functools import partial
 from PIL import Image, ImageTk
 import backend.function.database as database
@@ -33,7 +34,8 @@ class LaserFrame(Frame):
         
     def eventStateCheck(self, txt,type_check):
         try: self.processingCal(txt,type_check)
-        except: messagebox.showinfo(title= "CE Message", message ="Error in connect")
+        except Exception as e: 
+            messagebox.showinfo(title= "CE Message", message = e)
             
     def eventLoopProcessing(self, txt, type_check):
         if meta.external_var.state_in_root_temp == "run":
@@ -43,11 +45,11 @@ class LaserFrame(Frame):
     
     def eventClickedFunctionAppSchedule(self, txt, type_check):
         meta.external_var.signal_loop = 1
-        root_temp= Tk()
-        root_temp.geometry("400x80+300+300")
-        app_temp = LoopFrame(root_temp)
+        meta.external_var.root_temp= Tk()
+        meta.external_var.root_temp.geometry("400x80+300+300")
+        app_temp = LoopFrame(meta.external_var.root_temp)
         self.eventLoopProcessing(txt,type_check)
-        root_temp.mainloop()
+        meta.external_var.root_temp.mainloop()
     
     ##start a new thread to run schefule in app
     def eventClickedFunctionAppScheduleThread(self, txt, type_check):
@@ -82,18 +84,30 @@ class LaserFrame(Frame):
         meta.external_var.signal_loop = 0
                 
     def eventClickExit(self):
-        meta.external_var.root.destroy()
-        from interface.login_frame import LoginFrame
-        meta.external_var.root = Tk()
-        meta.external_var.root.geometry('1200x1000+300+0') 
-        meta.external_var.bg = ImageTk.PhotoImage(Image.open('data/images/FS_image1.png').resize((1920, 1080)))
-        meta.external_var.logo = ImageTk.PhotoImage(Image.open('data/images/logo.png').resize((34, 30)))
-        app= LoginFrame(meta.external_var.root)
-        meta.external_var.root.mainloop()
+        if meta.external_var.roll == "A":
+            try:
+                meta.external_var.root.destroy()
+                from interface.login_frame import LoginFrame
+                meta.external_var.root = Tk()
+                meta.external_var.root.geometry('1200x1000+300+0') 
+                meta.external_var.bg = ImageTk.PhotoImage(Image.open('data/images/FS_image1.png').resize((1920, 1080)))
+                meta.external_var.logo = ImageTk.PhotoImage(Image.open('data/images/logo.png').resize((34, 30)))
+                app= LoginFrame(meta.external_var.root)
+                meta.external_var.root.mainloop()
+            except Exception as e:
+                messagebox.showerror(message= e)
+        else:
+            messagebox.showinfo(title="Security", message="You are not authorized to perform this function")
     
     def eventClickHome(self):
         
         return
+    
+    def eventClickHelp(self):
+        meta.external_var.root_temp = Toplevel(meta.external_var.root)
+        meta.external_var.root_temp.geometry('600x600+200+200') 
+        app = HelpFrame(meta.external_var.root_temp)
+        meta.external_var.root_temp.mainloop()
     
     def eventButtonClickEdit(self):
         meta.external_var.root_temp = Toplevel(meta.external_var.root)

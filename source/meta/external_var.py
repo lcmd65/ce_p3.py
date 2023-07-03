@@ -8,4 +8,6 @@ logo =None
 
 username = None
 password = None
+email = None
+roll = None
 
