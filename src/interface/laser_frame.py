@@ -2,7 +2,10 @@ import meta.external_var
 import threading
 import tksheet 
 from tkinter import *
-from tkinter import Button, ttk, messagebox
+from tkinter import (
+    Button,
+    ttk,
+    messagebox)
 from interface.ui_func import sequence
 from interface.loop_frame import LoopFrame
 from interface.edit_frame import EditFrame

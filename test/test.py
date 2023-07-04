@@ -1,8 +1,15 @@
-import tkinter as tk
+import tkinter 
+import selenium
+import threading
 
-root = tk.Tk()
 
-button = tk.Button(root, text="Click me!", bg=None, bd=0)
-button.pack()
-
-root.mainloop()
+# Functional test
+class Test():
+    def __init__(self):
+        self.testcase = []
+        self.initTest()
+    
+    def initTest(self):
+        for index in range(100):
+            
+        
