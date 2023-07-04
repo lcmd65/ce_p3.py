@@ -1,7 +1,12 @@
+<<<<<<< HEAD
+=======
+
+>>>>>>> 1e443b0b670d391e81d7c91f7afb8cbef4ef8273
 import meta.external_var
 import threading
 import tksheet 
 from tkinter import *
+<<<<<<< HEAD
 from tkinter import (
     Button,
     ttk,
@@ -10,11 +15,22 @@ from interface.ui_func import sequence
 from interface.loop_frame import LoopFrame
 from interface.edit_frame import EditFrame
 from interface.help_frame import HelpFrame
+=======
+from tkinter import Button, ttk, messagebox
+from interface.ui_func import sequence
+from interface.loop_frame import LoopFrame
+from interface.edit_frame import EditFrame
+>>>>>>> 1e443b0b670d391e81d7c91f7afb8cbef4ef8273
 from functools import partial
 from PIL import Image, ImageTk
 import backend.function.database as database
 import backend.function.compare as compare
+<<<<<<< HEAD
 import tkmacosx 
+=======
+
+
+>>>>>>> 1e443b0b670d391e81d7c91f7afb8cbef4ef8273
 
 ## UI of Laser python CE P3
 class LaserFrame(Frame):
@@ -34,8 +50,12 @@ class LaserFrame(Frame):
         
     def eventStateCheck(self, txt,type_check):
         try: self.processingCal(txt,type_check)
+<<<<<<< HEAD
         except Exception as e: 
             messagebox.showinfo(title= "CE Message", message = e)
+=======
+        except: messagebox.showinfo(title= "CE Message", message ="Error in connect")
+>>>>>>> 1e443b0b670d391e81d7c91f7afb8cbef4ef8273
             
     def eventLoopProcessing(self, txt, type_check):
         if meta.external_var.state_in_root_temp == "run":
@@ -45,18 +65,30 @@ class LaserFrame(Frame):
     
     def eventClickedFunctionAppSchedule(self, txt, type_check):
         meta.external_var.signal_loop = 1
+<<<<<<< HEAD
         meta.external_var.root_temp= Tk()
         meta.external_var.root_temp.geometry("400x80+300+300")
         app_temp = LoopFrame(meta.external_var.root_temp)
         self.eventLoopProcessing(txt,type_check)
         meta.external_var.root_temp.mainloop()
+=======
+        root_temp= Tk()
+        root_temp.geometry("400x80+300+300")
+        app_temp = LoopFrame(root_temp)
+        self.eventLoopProcessing(txt,type_check)
+        root_temp.mainloop()
+>>>>>>> 1e443b0b670d391e81d7c91f7afb8cbef4ef8273
     
     ##start a new thread to run schefule in app
     def eventClickedFunctionAppScheduleThread(self, txt, type_check):
         temp_1 = threading.Thread(target= self.eventClickedFunctionAppSchedule(txt, type_check), )
         temp_1.start()
         temp_1.join()
+<<<<<<< HEAD
     
+=======
+
+>>>>>>> 1e443b0b670d391e81d7c91f7afb8cbef4ef8273
     def eventViewData(self, txt, sheet, type_check):
         df = database.processingUnpush(type_check)
         sheet.set_sheet_data(data = df.values.tolist(),\
@@ -66,7 +98,11 @@ class LaserFrame(Frame):
                     verify = False,\
                     reset_highlights = False)
         self.eventTriggerData(sheet)
+<<<<<<< HEAD
     
+=======
+
+>>>>>>> 1e443b0b670d391e81d7c91f7afb8cbef4ef8273
     def eventTriggerData(self, sheet_temp):
         for index in range(sheet_temp.get_total_rows()):
             if compare.compareString(sheet_temp.get_cell_data(index, 3, return_copy = True), \
@@ -82,6 +118,7 @@ class LaserFrame(Frame):
     def eventExitRoot(self):
         meta.external_var.state_in_root_temp = 'end'
         meta.external_var.signal_loop = 0
+<<<<<<< HEAD
         meta.external_var.root_temp.destroy()
     
     def eventClickExit(self):
@@ -99,17 +136,32 @@ class LaserFrame(Frame):
                 messagebox.showerror(message= e)
         else:
             messagebox.showinfo(title="Security", message="You are not authorized to perform this function")
+=======
+                
+    def eventClickExit(self):
+        meta.external_var.root.destroy()
+        from interface.login_frame import LoginFrame
+        meta.external_var.root = Tk()
+        meta.external_var.root.geometry('1200x1000+300+0') 
+        meta.external_var.bg = ImageTk.PhotoImage(Image.open('data/images/FS_image1.png').resize((1920, 1080)))
+        meta.external_var.logo = ImageTk.PhotoImage(Image.open('data/images/logo.png').resize((34, 30)))
+        app= LoginFrame(meta.external_var.root)
+        meta.external_var.root.mainloop()
+>>>>>>> 1e443b0b670d391e81d7c91f7afb8cbef4ef8273
     
     def eventClickHome(self):
         
         return
     
+<<<<<<< HEAD
     def eventClickHelp(self):
         meta.external_var.root_temp = Toplevel(meta.external_var.root)
         meta.external_var.root_temp.geometry('600x600+200+200') 
         app = HelpFrame(meta.external_var.root_temp)
         meta.external_var.root_temp.mainloop()
     
+=======
+>>>>>>> 1e443b0b670d391e81d7c91f7afb8cbef4ef8273
     def eventButtonClickEdit(self):
         meta.external_var.root_temp = Toplevel(meta.external_var.root)
         meta.external_var.root_temp.geometry('600x800+200+200') 
@@ -120,7 +172,11 @@ class LaserFrame(Frame):
         if key == 1: return "A"
         elif key == 2: return "B"
         elif key == 3: return "C"
+<<<<<<< HEAD
     
+=======
+        
+>>>>>>> 1e443b0b670d391e81d7c91f7afb8cbef4ef8273
     def initUI(self):
         self.parent.title("CE LASER P3")
         self.pack(fill=BOTH, expand=True)
@@ -168,7 +224,10 @@ class LaserFrame(Frame):
                 text_controls[index] =  Text(body_controls[index][1], bg ="#fcfcfc", height= 2)
                 text_controls[index].pack(fill=BOTH, pady=0, padx=5, expand=True)
                 
+<<<<<<< HEAD
                 # get type of machine data connect: A, B, C
+=======
+>>>>>>> 1e443b0b670d391e81d7c91f7afb8cbef4ef8273
                 temp = self.tranferString(index)
                 commands = [
                     partial(self.processingCal, text_controls[index], temp),
@@ -176,11 +235,23 @@ class LaserFrame(Frame):
                     partial(self.eventClickedFunctionAppScheduleThread, text_controls[index], temp),
                     partial(self.eventExitRoot),
                 ]
+<<<<<<< HEAD
                 for se_index, button_text, command_ in zip(range(4), ["Machine CE Monitor", "View CE", "Auto Monitor", "End Auto"], commands):
                     button_controls[index][se_index] = Button(body_controls[index][0], text= button_text, width=25, command = command_)
                     button_controls[index][se_index].pack(side=LEFT, padx=5, pady=5)
+=======
+                
+                for se_index, button_text, command_ in zip(range(4), ["Machine CE Monitor", "View CE", "Auto Monitor", "End Auto"], commands):
+                    button_controls[index][se_index] = Button(body_controls[index][0], text= button_text, width=25, command = command_)
+                    button_controls[index][se_index].pack(side=LEFT, padx=5, pady=5)
+            
+>>>>>>> 1e443b0b670d391e81d7c91f7afb8cbef4ef8273
             elif index ==0:
                 body_controls[index] = Frame(tab_controls[index])
                 body_controls[index].pack(fill= X, padx=5 ,pady=5)
                 button_controls[index] = Button(body_controls[index], text="Analyze", width=10, command = sequence(self.eventClickHome))
+<<<<<<< HEAD
                 button_controls[index].pack(side=LEFT, padx=5, pady=5)
+=======
+                button_controls[index].pack(side=LEFT, padx=5, pady=5)
+>>>>>>> 1e443b0b670d391e81d7c91f7afb8cbef4ef8273

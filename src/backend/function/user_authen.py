@@ -1,7 +1,10 @@
 import pymssql
 import pandas as pd
 import backend.const
+<<<<<<< HEAD
 import meta.external_var
+=======
+>>>>>>> 1e443b0b670d391e81d7c91f7afb8cbef4ef8273
 
 # dataframe of user information include ID, username, pass and email
 def dataframeUSER():
@@ -29,7 +32,10 @@ def authenticantionUser(username, password):
     for index in range(df.shape[0]):
         if df.loc[index, 1] == username and df.loc[index, 3] == password:
             bool_var = True
+<<<<<<< HEAD
             meta.external_var.roll = df.loc[index,4]
+=======
+>>>>>>> 1e443b0b670d391e81d7c91f7afb8cbef4ef8273
             break
     cnxn.close()
     return bool_var
