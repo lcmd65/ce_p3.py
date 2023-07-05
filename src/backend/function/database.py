@@ -3,32 +3,24 @@ import pandas as pd
 import backend.function.xml as xml
 import backend.const
 
+def cursorFromDatabase(_server , _port, _database, _user, _password):
+    cnxn = pymssql.connect(server = backend.const.jsonConst()[_server]\
+                        , port = backend.const.jsonConst()[_port]\
+                        , database = backend.const.jsonConst()[_database]\
+                        , user = backend.const.jsonConst()[_user]\
+                        , password = backend.const.jsonConst()[_password])
+    if cnxn != None: print("PROCESS DATABASE: CONNECT SUCCESS", cnxn)
+    return cnxn
+    
 ## Get data from control plan to trackback
 ## GET TO DATAFRAME
 def controlPlanGet(type):
-    cnxn = pymssql.connect(server= backend.const.jsonConst()["HOST"], port=backend.const.jsonConst()["PORT"]\
-                        , database=backend.const.jsonConst()["DB_GET"]\
-                        , user=backend.const.jsonConst()["USER"]\
-                        , password=backend.const.jsonConst()["PASSWORD"])
-    if cnxn != None: print("PROCESS DATABASE: CONNECT SUCCESS", cnxn)
-    if type =="A":
-        cur = cnxn.cursor()
-        cur.execute("SELECT * FROM " +backend.const.jsonConst()["TABLE_CONTROL_PLAN_A"])
-        data = cur.fetchall()
-        df = pd.DataFrame(data)
-        df['TOOL_VALUE']= None
-    elif type =="B":
-        cur = cnxn.cursor()
-        cur.execute("SELECT * FROM " +backend.const.jsonConst()["TABLE_CONTROL_PLAN_B"])
-        data = cur.fetchall()
-        df = pd.DataFrame(data)
-        df['TOOL_VALUE']= None
-    elif type =="C":
-        cur = cnxn.cursor()
-        cur.execute("SELECT * FROM " +backend.const.jsonConst()["TABLE_CONTROL_PLAN_C"])
-        data = cur.fetchall()
-        df = pd.DataFrame(data)
-        df['TOOL_VALUE']= None
+    cnxn = cursorFromDatabase("HOST", "PORT", "DB_GET", "USER", "PASSWORD")
+    cur = cnxn.cursor()
+    cur.execute("SELECT * FROM " +backend.const.jsonConst()["".join(["TABLE_CONTROL_PLAN_", type])])
+    data = cur.fetchall()
+    df = pd.DataFrame(data)
+    df['TOOL_VALUE'] = None
     cnxn.close()
     return df
 
@@ -45,41 +37,22 @@ def processing():
     print ("DATABASE PROCESSING: SUCCESS")
 
 def processingConsistOfType(type):
-    if type =="A":
-        df = controlPlanGet("A")
-        xml.parseParaXMLDB(backend.const.jsonConst()["xml_globals"], df)
-        xml.parseParaXMLDB(backend.const.jsonConst()["xml_recipe"], df)
-        pushDatabaseActual(df, "A")
-    elif type =="B":
-        df = controlPlanGet("B")
-        xml.parseParaXMLDB(backend.const.jsonConst()["xml_globals"], df)
-        xml.parseParaXMLDB(backend.const.jsonConst()["xml_recipe"], df)
-        pushDatabaseActual(df, "B")
-    elif type =="C":
-        df = controlPlanGet("C")
-        xml.parseParaXMLDB(backend.const.jsonConst()["xml_globals"], df)
-        xml.parseParaXMLDB(backend.const.jsonConst()["xml_recipe"], df)
-        pushDatabaseActual(df, "C")
+    df = controlPlanGet(type)
+    xml.parseParaXMLDB(backend.const.jsonConst()["xml_globals"], df)
+    xml.parseParaXMLDB(backend.const.jsonConst()["xml_recipe"], df)
+    pushDatabaseActual(df, type)
     print ("DATABASE PROCESSING: SUCCESS")
 ##________________________________________________________________________________________________
 
 def processingUnpush(type):
-    if type =="A":
-        df = controlPlanGet("A")
-        xml.parseParaXMLDB(backend.const.jsonConst()["xml_globals"], df)
-        xml.parseParaXMLDB(backend.const.jsonConst()["xml_recipe"], df)
-    elif type =="B":
-        df = controlPlanGet("B")
-        xml.parseParaXMLDB(backend.const.jsonConst()["xml_globals"], df)
-        xml.parseParaXMLDB(backend.const.jsonConst()["xml_recipe"], df)
-    elif type =="C":
-        df = controlPlanGet("C")
-        xml.parseParaXMLDB(backend.const.jsonConst()["xml_globals"], df)
-        xml.parseParaXMLDB(backend.const.jsonConst()["xml_recipe"], df)
+    df = controlPlanGet(type)
+    xml.parseParaXMLDB(backend.const.jsonConst()["xml_globals"], df)
+    xml.parseParaXMLDB(backend.const.jsonConst()["xml_recipe"], df)
     return df
 
 def pushDatabaseActual(df,type):
-    cnxn = pymssql.connect(server=backend.const.jsonConst()["HOST"], port=backend.const.jsonConst()["PORT"]\
+    cnxn = pymssql.connect(server=backend.const.jsonConst()["HOST"]\
+                        , port=backend.const.jsonConst()["PORT"]\
                         , database=backend.const.jsonConst()["DB_PUSH"]\
                         , user=backend.const.jsonConst()["USER"]\
                         , password=backend.const.jsonConst()["PASSWORD"])

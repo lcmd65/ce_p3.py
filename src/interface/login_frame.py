@@ -7,34 +7,18 @@ import backend.function.user_authen as user_authen
 from PIL import Image, ImageTk
 import meta.external_var
 
-<<<<<<< HEAD
-=======
 
->>>>>>> 1e443b0b670d391e81d7c91f7afb8cbef4ef8273
 class LoginFrame(Frame):
     def __init__(self, parent):
         Frame.__init__(self, parent)
         self.parent = parent
         self.initUI()
     
-<<<<<<< HEAD
-=======
-    def connnectUserInfo(self):
-        if user_authen.authenticantionUser(meta.external_var.username, meta.external_var.password) == True:
-            return True
-        else:
-            return False
-    
->>>>>>> 1e443b0b670d391e81d7c91f7afb8cbef4ef8273
     def eventClickButtonLogin(self, entry_account, entry_password):
         meta.external_var.username = entry_account.get()
         meta.external_var.password = entry_password.get()
         try:
-<<<<<<< HEAD
             if user_authen.authenticantionUser(meta.external_var.username, meta.external_var.password) == False:
-=======
-            if self.connnectUserInfo() == False:
->>>>>>> 1e443b0b670d391e81d7c91f7afb8cbef4ef8273
                 messagebox.showinfo(message = "Wrong password or username")
             else:
                 from interface.laser_frame import LaserFrame
@@ -42,19 +26,16 @@ class LoginFrame(Frame):
                 meta.external_var.root = Tk()
                 meta.external_var.bg = ImageTk.PhotoImage(Image.open('data/images/FS_image.png'))
                 meta.external_var.root.geometry('1200x1000+300+0') 
-                app = LaserFrame(meta.external_var.root)
+                app_laser = LaserFrame(meta.external_var.root)
                 meta.external_var.root.mainloop()
         except:
-<<<<<<< HEAD
             messagebox.showerror(title= "Connection Error", message= "Connection False")
-=======
             messagebox.showerror(message= "Connection False")
->>>>>>> 1e443b0b670d391e81d7c91f7afb8cbef4ef8273
         
     def eventClickButtonForgotPass(self):
         meta.external_var.root_temp = Toplevel()
         meta.external_var.root_temp.geometry('600x400+200+200') 
-        app = ForgotFrame(meta.external_var.root_temp)
+        app_forgot = ForgotFrame(meta.external_var.root_temp)
         meta.external_var.root_temp.mainloop()
         
     ## init ui on frame

@@ -1,8 +1,8 @@
 from tkinter import *
 from tkinter import messagebox
+from functools import partial
 import backend.function.user_authen
 import meta.external_var
-from functools import partial
 
 class ForgotFrame(Frame):
     def __init__(self, parent):
@@ -11,14 +11,11 @@ class ForgotFrame(Frame):
         self.initUI()
         
     def eventClickChangePassword(self, account, email, newpass, confirm):
-        account_str = account.get()
-        email_str = email.get()
-        newpass_str = newpass.get()
-        confirm_str = confirm.get()
+        account_str, email_str, newpass_str, confirm_str  = account.get(), email.get(), newpass.get(), confirm.get()
         if newpass_str != confirm_str:
             messagebox.showinfo(message= "Confirm pass does not match")
         else:
-            df= backend.function.user_authen.dataframeUSER()
+            df = backend.function.user_authen.dataframeUSER()
             for index in range(df.shape[0]):
                 if df.loc[index, 1] == account_str and df.loc[index, 2] == email_str:
                     try:
