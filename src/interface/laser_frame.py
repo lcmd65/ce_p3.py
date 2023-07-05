@@ -61,11 +61,11 @@ class LaserFrame(Frame):
     def eventViewData(self, txt, sheet, type_check):
         df = database.processingUnpush(type_check)
         sheet.set_sheet_data(data = df.values.tolist(),\
-                    reset_col_positions = True,\
-                    reset_row_positions = True,\
-                    redraw = True,\
-                    verify = False,\
-                    reset_highlights = False)
+                            reset_col_positions = True,\
+                            reset_row_positions = True,\
+                            redraw = True,\
+                            verify = False,\
+                            reset_highlights = False)
         self.eventTriggerData(sheet)
     
     def eventTriggerData(self, sheet_temp):
@@ -74,13 +74,14 @@ class LaserFrame(Frame):
             sheet_temp.get_cell_data(index, 7,  return_copy = True), \
             sheet_temp.get_cell_data(index, 4,  return_copy = True)) == 0:
                 sheet_temp.highlight_cells(row = index,\
-                column = 7,\
-                bg = "Red",\
-                fg = None,\
-                redraw = False,\
-                overwrite = True)
+                                            column = 7,\
+                                            bg = "Red",\
+                                            fg = None,\
+                                            redraw = False,\
+                                            overwrite = True)
     
     def eventExitRoot(self):
+        gc.collect()
         meta.external_var.state_in_root_temp = 'end'
         meta.external_var.signal_loop = 0
         meta.external_var.root_temp.destroy()
@@ -113,21 +114,21 @@ class LaserFrame(Frame):
         meta.external_var.root.mainloop()
     
     def eventClickHome(self):
-        ##?
+        
         return
     
     def eventClickHelp(self):
         gc.collect()
-        meta.external_var.root_temp = Toplevel(meta.external_var.root)
+        meta.external_var.root_temp = Toplevel()
         meta.external_var.root_temp.geometry('600x600+200+200') 
         app_help = HelpFrame(meta.external_var.root_temp)
         meta.external_var.root_temp.mainloop()
     
     def eventButtonClickEdit(self):
         gc.collect()
-        meta.external_var.root_temp = Toplevel(meta.external_var.root)
+        meta.external_var.root_temp = Toplevel()
         meta.external_var.root_temp.geometry('600x800+200+200') 
-        app = EditFrame(meta.external_var.root_temp)
+        app_edit = EditFrame(meta.external_var.root_temp)
         meta.external_var.root_temp.mainloop()
     
     def tranferString(self, key):
