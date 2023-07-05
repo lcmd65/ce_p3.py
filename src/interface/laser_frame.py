@@ -146,7 +146,7 @@ class LaserFrame(Frame):
         button_bar = Frame(label_root, bg= None)
         button_bar.pack(side = TOP, fill = X)
         button_bars = [ None for _ in range(4)]
-        for index, label_text, commands in zip(range(4), ["Exit", "File", "Edit", "Help"], [self.eventClickExit, None, self.eventButtonClickEdit, None]):
+        for index, label_text, commands in zip(range(4), ["Exit", "File", "Edit", "Help"], [self.eventClickExit, None, self.eventButtonClickEdit, self.eventClickHelp]):
             button_bars[index] = Button(button_bar, text = label_text, width= 10, command= commands, bg= None, image=None)
             button_bars[index].config(bg= None, bd=0)
             button_bars[index].pack(side = LEFT, fill = BOTH)
