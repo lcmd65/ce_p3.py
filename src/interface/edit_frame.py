@@ -5,7 +5,6 @@ from interface.ui_func import stopAllProcesingToFile
 import backend.const
 import threading
 
-
 class EditFrame(Frame):
     def __init__(self, parent):
         Frame.__init__(self, parent)
@@ -20,7 +19,6 @@ class EditFrame(Frame):
         except Exception as e:
             print(e)
         messagebox.showinfo(title="Message", message="Success")
-        self.destroy()
     
     # thread to prevent Deamon Thread error
     def eventButtonChangeVariableClickThread(self, text, entries):
