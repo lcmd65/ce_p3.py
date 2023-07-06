@@ -2,6 +2,7 @@ import pymssql
 import pandas as pd
 import backend.function.xml as xml
 import backend.const
+from tkinter import messagebox
 
 def cursorFromDatabase(_server , _port, _database, _user, _password):
     cnxn = pymssql.connect(server = backend.const.jsonConst()[_server]\
@@ -9,8 +10,11 @@ def cursorFromDatabase(_server , _port, _database, _user, _password):
                         , database = backend.const.jsonConst()[_database]\
                         , user = backend.const.jsonConst()[_user]\
                         , password = backend.const.jsonConst()[_password])
-    if cnxn != None: print("PROCESS DATABASE: CONNECT SUCCESS", cnxn)
-    return cnxn
+    if cnxn != None: 
+        return cnxn
+    else: 
+        messagebox.showerror(title= "Connection Error", message = "Connection False")
+        return cnxn
     
 ## Get data from control plan to trackback
 ## GET TO DATAFRAME

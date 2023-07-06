@@ -24,8 +24,9 @@ class HelpFrame(Frame):
         
         label_privacy = Label(self.parent, text ="First Solar privacy @2022", font =("Roboto",14,"bold"))
         label_privacy.pack(fill= X, side = LEFT)
-        label_body = Label(self, i = meta.external_var.bg)
-        label_body.pack()
+        
+        label_body = Label(self)
+        label_body.pack(fill = BOTH)
         
         frame_body = [None for _ in range(3)]
         for index in range(3):
