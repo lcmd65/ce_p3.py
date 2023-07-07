@@ -43,7 +43,8 @@ class LaserFrame(Frame):
             self.eventStateCheckThread(txt, type_check)
         if meta.external_var.signal_loop == 1:
             meta.external_var.root.after(10000,sequence(partial(self.eventLoopProcessing,txt,type_check)))
-    
+            
+    ## click for CE function loop checking
     def eventClickedFunctionAppSchedule(self, txt, type_check):
         meta.external_var.signal_loop = 1
         meta.external_var.root_temp= Tk()
@@ -52,12 +53,13 @@ class LaserFrame(Frame):
         self.eventLoopProcessing(txt,type_check)
         meta.external_var.root_temp.mainloop()
     
-    ##start a new thread to run schefule in app
+    ## start a new thread to run schefule in app
     def eventClickedFunctionAppScheduleThread(self, txt, type_check):
         temp_1 = threading.Thread(target= self.eventClickedFunctionAppSchedule(txt, type_check), )
         temp_1.start()
         temp_1.join()
     
+    # view function in sheet after run function CE compare 
     def eventViewData(self, txt, sheet, type_check):
         df = database.processingUnpush(type_check)
         sheet.set_sheet_data(data = df.values.tolist(),\
@@ -68,6 +70,7 @@ class LaserFrame(Frame):
                             reset_highlights = False)
         self.eventTriggerData(sheet)
     
+    # trigger cell that have a same row machine data and ce data difference
     def eventTriggerData(self, sheet_temp):
         for index in range(sheet_temp.get_total_rows()):
             if compare.compareString(sheet_temp.get_cell_data(index, 3, return_copy = True), \
@@ -80,12 +83,14 @@ class LaserFrame(Frame):
                                             redraw = False,\
                                             overwrite = True)
     
+    # exit function CE loop tracking
     def eventExitRoot(self):
         gc.collect()
         meta.external_var.state_in_root_temp = 'end'
         meta.external_var.signal_loop = 0
         meta.external_var.root_temp.destroy()
     
+    # exit button ("EXIT") in button bar, function return to Login Frame 
     def eventClickExit(self):
         if meta.external_var.roll == "A":
             try:
@@ -101,22 +106,13 @@ class LaserFrame(Frame):
                 messagebox.showerror(message= e)
         else:
             messagebox.showinfo(title="Security", message="You are not authorized to perform this function")
-                
-    def eventClickExit(self):
-        meta.external_var.root.destroy()
-        from interface.login_frame import LoginFrame
-        gc.collect()
-        meta.external_var.root = Tk()
-        meta.external_var.root.geometry('1200x1000+300+0') 
-        meta.external_var.bg = ImageTk.PhotoImage(Image.open('data/images/FS_image1.png').resize((1920, 1080)))
-        meta.external_var.logo = ImageTk.PhotoImage(Image.open('data/images/logo.png').resize((34, 30)))
-        app_login = LoginFrame(meta.external_var.root)
-        meta.external_var.root.mainloop()
     
+    # button Analyze in tab home
     def eventClickHome(self):
         
         return
     
+    # button "HELP" in button bar
     def eventClickHelp(self):
         gc.collect()
         meta.external_var.root_temp = Toplevel()
@@ -124,6 +120,7 @@ class LaserFrame(Frame):
         app_help = HelpFrame(meta.external_var.root_temp)
         meta.external_var.root_temp.mainloop()
     
+    # button Edit data in button bar
     def eventButtonClickEdit(self):
         gc.collect()
         meta.external_var.root_temp = Toplevel()
@@ -131,6 +128,7 @@ class LaserFrame(Frame):
         app_edit = EditFrame(meta.external_var.root_temp)
         meta.external_var.root_temp.mainloop()
     
+    # function to help tranfer 1 , 2, 3 to char A, B, C
     def tranferString(self, key):
         if key == 1: return "A"
         elif key == 2: return "B"
@@ -194,6 +192,8 @@ class LaserFrame(Frame):
                 for se_index, button_text, command_ in zip(range(4), ["Machine CE Monitor", "View CE", "Auto Monitor", "End Auto"], commands):
                     button_controls[index][se_index] = Button(body_controls[index][0], text= button_text, width=25, command = command_)
                     button_controls[index][se_index].pack(side=LEFT, padx=5, pady=5)
+            
+            # tab home define
             elif index ==0:
                 body_controls[index] = Frame(tab_controls[index])
                 body_controls[index].pack(fill= X, padx=5 ,pady=5)
