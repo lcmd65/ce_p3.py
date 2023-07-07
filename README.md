@@ -18,5 +18,8 @@
 ![image](https://github.com/DatMinhLeChon/CE_P3.GUI/assets/93373784/6e40dfde-e85e-4d32-8a73-af7619054dee)
 
 ## Edit Parameter Page
+![image](https://github.com/DatMinhLeChon/CE_P3.GUI/assets/93373784/e3928e47-1f28-4149-b9f2-d7dccef77c92)
 
-![image](https://github.com/DatMinhLeChon/CE_P3.GUI/assets/93373784/f3ef7b80-0157-47d9-af5e-c76e5321f970)
+## Tracking data
+  ### With API in tkinter library and Pymssl, build class and data model for processing and view in tkinter widget
+  
