@@ -109,8 +109,10 @@ class LaserFrame(Frame):
     
     # button Analyze in tab home
     def eventClickHome(self):
-        
-        return
+        try:
+            database.processing()
+        except Exception as e:
+            messagebox.showerror(message= e)
     
     # button "HELP" in button bar
     def eventClickHelp(self):
