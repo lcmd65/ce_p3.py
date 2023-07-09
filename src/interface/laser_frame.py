@@ -14,7 +14,6 @@ from functools import partial
 from PIL import Image, ImageTk
 import backend.function.database as database
 import backend.function.compare as compare
-import tkmacosx 
 import gc
 
 ## UI of Laser python CE P3
