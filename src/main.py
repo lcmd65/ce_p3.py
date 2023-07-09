@@ -47,12 +47,6 @@ def eventCheckOut():
             meta.external_var.login_status = False
         meta.external_var.root.after(1000,sequence(eventCheckOut()))
 
-def eventCheckLoginStatusLoop():
-    if meta.external_var.root != None:
-        eventCheckLoginStatus()
-    elif meta.externa_var.root == None:
-        pass
-
 def main():
     meta.external_var.root = Tk()
     meta.external_var.root.geometry('1200x1000+300+0') 
@@ -60,7 +54,7 @@ def main():
     meta.external_var.logo = ImageTk.PhotoImage(Image.open('data/images/logo.png').resize((34, 30)))
     app_login = LoginFrame(meta.external_var.root)
     meta.external_var.root.mainloop()
-    sequence(eventCheckLoginStatusLoop(), eventCheckOut())
+    sequence(eventCheckLoginStatus(), eventCheckOut())
 
 if __name__ == "__main__" :
     main()

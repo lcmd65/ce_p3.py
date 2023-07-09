@@ -2,6 +2,7 @@ from tkinter import *
 from tkinter.ttk import *
 from tkinter import messagebox
 from interface.forgot_frame import ForgotFrame
+from interface.edit_frame import EditFrame
 from functools import partial
 import backend.function.user_authen as user_authen
 from PIL import Image, ImageTk
@@ -96,8 +97,22 @@ class LoginFrame(Frame):
         
         label_password = Label(frame7, text = "Login", font =("Calibri", 12, 'bold'))
         label_password.pack(side = TOP)
+
+class LoginFrameAccuracy(LoginFrame):
+    def __init__(self, parent, LoginFrame):
+        LoginFrame.__init__(self, parent, LoginFrame)
         
+    def eventClickButtonLogin(self, entry_account, entry_password):
+        meta.external_var.username = entry_account.get()
+        meta.external_var.password = entry_password.get()
+        try:
+            if user_authen.authenticantionUser(meta.external_var.username, meta.external_var.password) == False:
+                messagebox.showinfo(message = "Wrong password or username")
+            else:
+                meta.external_var.root_temp = Toplevel()
+                meta.external_var.root_temp.geometry('600x800+200+200') 
+                app_edit = EditFrame(meta.external_var.root_temp)
+                meta.external_var.root_temp.mainloop()
+        except Exception as e:
+            messagebox.showerror(message= e)
         
-        
-        
-    

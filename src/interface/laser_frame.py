@@ -124,10 +124,11 @@ class LaserFrame(Frame):
     
     # button Edit data in button bar
     def eventButtonClickEdit(self):
+        from interface.login_frame import LoginFrameAccuracy 
         gc.collect()
         meta.external_var.root_temp = Toplevel()
         meta.external_var.root_temp.geometry('600x800+200+200') 
-        app_edit = EditFrame(meta.external_var.root_temp)
+        app_edit = LoginFrameAccuracy(meta.external_var.root_temp)
         meta.external_var.root_temp.mainloop()
     
     # function to help tranfer 1 , 2, 3 to char A, B, C
