@@ -11,3 +11,5 @@ password = None
 email = None
 roll = None
 
+login_status = None
+
