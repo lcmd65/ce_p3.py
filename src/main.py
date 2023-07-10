@@ -3,10 +3,13 @@ import gc
 import keyboard
 import mouse
 import time
-from tkinter import Tk
+import sys
+from tkinter import Tk, messagebox
 from interface.login_frame import LoginFrame
 from interface import *
 from PIL import Image, ImageTk
+
+sys.setrecursionlimit(1000000)
 
 def sequence(*functions):
     def func(*args, **kwargs):
@@ -42,10 +45,15 @@ def eventCheckLoginStatus():
         meta.external_var.root.after(1000,sequence(eventCheckLoginStatus()))
 
 def eventCheckOut():
-    if meta.external_var.root != None:
-        if getTimeSinceLastKeyboardEvent >=100000 and getTimeSinceLastMouseEvent >= 100000:
-            meta.external_var.login_status = False
-        meta.external_var.root.after(1000,sequence(eventCheckOut()))
+    if getTimeSinceLastKeyboardEvent() >= 50000 \
+    and getTimeSinceLastKeyboardEvent() < 52000 \
+    and getTimeSinceLastMouseEvent() >= 50000 \
+    and getTimeSinceLastMouseEvent()  < 52000 :
+        messagebox.showerror(message = "Are you still there")
+    elif getTimeSinceLastKeyboardEvent() >= 60000 and getTimeSinceLastMouseEvent() >= 60000:
+        meta.external_var.login_status = False
+        messagebox.showerror(message = "System logged out. You need to login again")
+    meta.external_var.root.after(1000,sequence(eventCheckOut()))
 
 def main():
     meta.external_var.root = Tk()

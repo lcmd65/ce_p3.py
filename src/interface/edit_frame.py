@@ -16,9 +16,9 @@ class EditFrame(Frame):
         try:
             for index in range(len(entries)):
                 backend.const.jsonChange(text[index], entries[index].get())
+            messagebox.showinfo(title="Message", message="Success")
         except Exception as e:
             print(e)
-        messagebox.showinfo(title="Message", message="Success")
     
     # thread to prevent Deamon Thread error
     def eventButtonChangeVariableClickThread(self, text, entries):

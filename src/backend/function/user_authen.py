@@ -37,7 +37,7 @@ def authenticantionUser(username, password):
         cnxn.close()
         return bool_var
     except Exception as e:
-        messagebox.show 
+        messagebox.showerror(message= e)
 
 def changePass(username, email, password):
     cnxn = pymssql.connect(server= backend.const.jsonConst()["HOST"], port= backend.const.jsonConst()["PORT"]\
