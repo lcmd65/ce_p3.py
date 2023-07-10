@@ -39,7 +39,7 @@ def eventCheckLoginStatus():
         if meta.external_var.login_status == False:
             meta.external_var.root.destroy()
             meta.external_var.root_temp.destroy()
-            gc.colect()
+            gc.collect()
         else: pass
         meta.external_var.root.after(1000,sequence(eventCheckLoginStatus()))
 

@@ -68,11 +68,3 @@ class ForgotFrame(Frame):
         
         self.button1 = Button(self.frame_panel[4], text = "OK", width = 15, command= partial(self.eventClickChangePassword, self.entry_account, self.entry_email, self.entry_new_password, self.entry_confirm_password))
         self.button1.pack(side = RIGHT)
-
-        
-        
-        
-        
-        
-        
-         
