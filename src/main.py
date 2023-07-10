@@ -5,7 +5,6 @@ import mouse
 import time
 from tkinter import Tk
 from interface.login_frame import LoginFrame
-from interface import *
 from PIL import Image, ImageTk
 
 def sequence(*functions):
@@ -54,7 +53,10 @@ def main():
     meta.external_var.logo = ImageTk.PhotoImage(Image.open('data/images/logo.png').resize((34, 30)))
     app_login = LoginFrame(meta.external_var.root)
     meta.external_var.root.mainloop()
-    sequence(eventCheckLoginStatus(), eventCheckOut())
+    try:
+        sequence(eventCheckLoginStatus(), eventCheckOut())
+    except Exception as e :
+        print(e)
 
 if __name__ == "__main__" :
     main()

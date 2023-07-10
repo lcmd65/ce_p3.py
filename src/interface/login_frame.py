@@ -100,8 +100,8 @@ class LoginFrame(Frame):
 
 class LoginFrameAccuracy(LoginFrame):
     def __init__(self, parent, LoginFrame):
-        LoginFrame.__init__(self, parent, LoginFrame)
-        
+        LoginFrame.__init__(self, parent)
+    
     def eventClickButtonLogin(self, entry_account, entry_password):
         meta.external_var.username = entry_account.get()
         meta.external_var.password = entry_password.get()
