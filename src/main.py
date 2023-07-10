@@ -6,10 +6,9 @@ import time
 import sys
 from tkinter import Tk, messagebox
 from interface.login_frame import LoginFrame
-from interface import *
 from PIL import Image, ImageTk
 
-sys.setrecursionlimit(1000000)
+sys.setrecursionlimit(100000)
 
 def sequence(*functions):
     def func(*args, **kwargs):
@@ -40,19 +39,14 @@ def eventCheckLoginStatus():
         if meta.external_var.login_status == False:
             meta.external_var.root.destroy()
             meta.external_var.root_temp.destroy()
-            gc.colect()
+            gc.collect()
         else: pass
         meta.external_var.root.after(1000,sequence(eventCheckLoginStatus()))
 
 def eventCheckOut():
-    if getTimeSinceLastKeyboardEvent() >= 50000 \
-    and getTimeSinceLastKeyboardEvent() < 52000 \
-    and getTimeSinceLastMouseEvent() >= 50000 \
-    and getTimeSinceLastMouseEvent()  < 52000 :
-        messagebox.showerror(message = "Are you still there")
-    elif getTimeSinceLastKeyboardEvent() >= 60000 and getTimeSinceLastMouseEvent() >= 60000:
+    if getTimeSinceLastKeyboardEvent >=100000 and getTimeSinceLastMouseEvent >= 100000:
         meta.external_var.login_status = False
-        messagebox.showerror(message = "System logged out. You need to login again")
+        messagebox.showinfo(message= "System Log Out")
     meta.external_var.root.after(1000,sequence(eventCheckOut()))
 
 def main():
@@ -62,7 +56,10 @@ def main():
     meta.external_var.logo = ImageTk.PhotoImage(Image.open('data/images/logo.png').resize((34, 30)))
     app_login = LoginFrame(meta.external_var.root)
     meta.external_var.root.mainloop()
-    sequence(eventCheckLoginStatus(), eventCheckOut())
+    try:
+        sequence(eventCheckLoginStatus(), eventCheckOut())
+    except Exception as e :
+        print(e)
 
 if __name__ == "__main__" :
     main()

@@ -116,6 +116,3 @@ class LoginFrameAccuracy(LoginFrame):
         
     def initUI(self):
         super().initUI()
-        
-    
-        

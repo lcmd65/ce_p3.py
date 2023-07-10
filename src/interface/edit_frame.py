@@ -30,21 +30,22 @@ class EditFrame(Frame):
         self.parent.title("EDIT SYSTEM PATH")
         self.pack(fill = BOTH, expand= True)
         
-        label_privacy = Label(self, text = "First Solar privacy @2022", font=("Roboto", 12, "bold"))
-        label_privacy.pack(side = BOTTOM, fill = BOTH)
+        self.label_privacy = Label(self, text = "First Solar privacy @2022", font=("Roboto", 12, "bold"))
+        self.label_privacy.pack(side = BOTTOM, fill = BOTH)
+        
         # body frame
-        frame_main = [None for _ in range(3)]
+        self.frame_main = [None for _ in range(3)]
         for index in range(3):
-            frame_main[index] = Frame(self)
-            frame_main[index].pack(fill = BOTH, padx = 20,  pady = 20)
+            self.frame_main[index] = Frame(self)
+            self.frame_main[index].pack(fill = BOTH, padx = 20,  pady = 20)
             
         # frame config label
-        label_info = Label(frame_main[0], text = "Path & Environment variable Configuration", font = ("Roboto", 14, "bold"))
-        label_info.pack(side= LEFT)
+        self.label_info = Label(self.frame_main[0], text = "Path & Environment variable Configuration", font = ("Roboto", 14, "bold"))
+        self.label_info.pack(side= LEFT)
         
         # frame 2 (body frame)
-        panel_button = PanedWindow(frame_main[1], orient="vertical")
-        panel_button.pack(fill = X)
+        self.panel_button = PanedWindow(self.frame_main[1], orient="vertical")
+        self.panel_button.pack(fill = X)
         
         # text label view of parameter
         text_label = ["DRIVER",\
@@ -55,20 +56,20 @@ class EditFrame(Frame):
                     "DB_GET",\
                     "DB_PUSH"]
         
-        labels = [None for _ in range(7) ]
-        entries = [None for _ in range(7) ]
-        frames = [None for _ in range(7) ]
+        self.labels = [None for _ in range(7) ]
+        self.entries = [None for _ in range(7) ]
+        self.frames = [None for _ in range(7) ]
         
         for label, index in zip(text_label, range(len(text_label))):
-            frames[index] = Frame(panel_button)
-            labels[index] = Label(frames[index], text = label)
-            entries[index] = Entry(frames[index])
-            entries[index].insert(0, backend.const.jsonConst()[label])
+            self.frames[index] = Frame(self.panel_button)
+            self.labels[index] = Label(self.frames[index], text = label)
+            self.entries[index] = Entry(self.frames[index])
+            self.entries[index].insert(0, backend.const.jsonConst()[label])
             
-            labels[index].pack(side = LEFT, fill = X)
-            entries[index].pack(side = TOP, fill = X)
-            frames[index].pack(side =TOP, fill = X, pady =5)
+            self.labels[index].pack(side = LEFT, fill = X)
+            self.entries[index].pack(side = TOP, fill = X)
+            self.frames[index].pack(side =TOP, fill = X, pady =5)
         
-        frame_main[2].pack(side = BOTTOM)
-        button1 = Button(frame_main[2], text = "OK", width= 20, command = partial(self.eventButtonChangeVariableClickThread, text_label, entries))
-        button1.pack(side = RIGHT, pady = 20)
+        self.frame_main[2].pack(side = BOTTOM)
+        self.button1 = Button(self.frame_main[2], text = "OK", width= 20, command = partial(self.eventButtonChangeVariableClickThread, text_label, self.entries))
+        self.button1.pack(side = RIGHT, pady = 20)

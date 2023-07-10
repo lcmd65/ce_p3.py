@@ -145,11 +145,11 @@ class LaserFrame(Frame):
         
         self.button_bar = Frame(self.label_root, bg= None)
         self.button_bar.pack(side = TOP, fill = X)
-        button_bars = [ None for _ in range(4)]
+        self.button_bars = [ None for _ in range(4)]
         for index, label_text, commands in zip(range(4), ["Exit", "File", "Edit", "Help"], [self.eventClickExit, None, self.eventButtonClickEdit, self.eventClickHelp]):
-            button_bars[index] = Button(self.button_bar, text = label_text, width= 10, command= commands, bg= None, image=None)
-            button_bars[index].config(bg= None, bd=0)
-            button_bars[index].pack(side = LEFT, fill = BOTH)
+            self.button_bars[index] = Button(self.button_bar, text = label_text, width= 10, command= commands, bg= None, image=None)
+            self.button_bars[index].config(bg= None, bd=0)
+            self.button_bars[index].pack(side = LEFT, fill = BOTH)
         
         # Notebook include tab home, laser P3A to C
         self.notebook_control = ttk.Notebook(self.label_root)
