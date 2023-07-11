@@ -8,7 +8,6 @@ from tkinter import (
     messagebox)
 from interface.ui_func import sequence
 from interface.loop_frame import LoopFrame
-from interface.edit_frame import EditFrame
 from interface.help_frame import HelpFrame
 from functools import partial
 from PIL import Image, ImageTk
