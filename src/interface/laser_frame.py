@@ -142,6 +142,7 @@ class LaserFrame(Frame):
         self.label_root = Label(self, i= meta.external_var.bg, bg = None)
         self.label_root.pack()
         
+        # button bar (consist of Exit, Edit, Help)
         self.button_bar = Frame(self.label_root, bg= None)
         self.button_bar.pack(side = TOP, fill = X)
         self.button_bars = [ None for _ in range(4)]
@@ -195,7 +196,7 @@ class LaserFrame(Frame):
                     self.button_controls[index][se_index].pack(side=LEFT, padx=5, pady=5)
             
             # tab home define
-            elif index ==0:
+            elif index == 0:
                 self.body_controls[index] = Frame(self.tab_controls[index])
                 self.body_controls[index].pack(fill= X, padx=5 ,pady=5)
                 self.button_controls[index] = Button(self.body_controls[index], text="Analyze", width=10, command = sequence(self.eventClickHome))
