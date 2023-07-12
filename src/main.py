@@ -8,7 +8,7 @@ from tkinter import Tk, messagebox
 from interface.login_frame import LoginFrame
 from PIL import Image, ImageTk
 
-sys.setrecursionlimit(100000)
+sys.setrecursionlimit(1000000)
 
 def sequence(*functions):
     def func(*args, **kwargs):
@@ -35,19 +35,24 @@ def getTimeSinceLastKeyboardEvent():
         return None
 
 def eventCheckLoginStatus():
-    if meta.external_var.root != None:
-        if meta.external_var.login_status == False:
-            meta.external_var.root.destroy()
-            meta.external_var.root_temp.destroy()
-            gc.collect()
-        else: pass
-        meta.external_var.root.after(1000,sequence(eventCheckLoginStatus()))
-
+    try:
+        if meta.external_var.root != None:
+            if meta.external_var.login_status == False:
+                meta.external_var.root.destroy()
+                meta.external_var.root_temp.destroy()
+                gc.collect()
+            else: pass
+            meta.external_var.root.after(1000,sequence(eventCheckLoginStatus()))
+    except:
+        pass
 def eventCheckOut():
-    if getTimeSinceLastKeyboardEvent >=100000 and getTimeSinceLastMouseEvent >= 100000:
-        meta.external_var.login_status = False
-        messagebox.showinfo(message= "System Log Out")
-    meta.external_var.root.after(1000,sequence(eventCheckOut()))
+    try:
+        if getTimeSinceLastKeyboardEvent >=100000 and getTimeSinceLastMouseEvent >= 100000:
+            meta.external_var.login_status = False
+            messagebox.showinfo(message= "System Log Out")
+        meta.external_var.root.after(1000,sequence(eventCheckOut()))
+    except:
+        pass
 
 def main():
     meta.external_var.root = Tk()
