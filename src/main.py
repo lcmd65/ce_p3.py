@@ -36,7 +36,7 @@ def getTimeSinceLastKeyboardEvent():
 
 def eventCheckLoginStatus():
     try:
-        if meta.external_var.root != None:
+        if meta.external_var.root is not None:
             if meta.external_var.login_status == False:
                 meta.external_var.root.destroy()
                 meta.external_var.root_temp.destroy()
