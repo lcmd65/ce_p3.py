@@ -9,7 +9,15 @@ class AutomationTest():
         self.testcase = []
         self.initTest(size)
     
-    def LoginTest(self):
+    def getAppDriver(self):
+        try:
+            driver = webdriver.WinAppDriver()
+            driver.get("C:\\Program Files\\CE_Laser\\CE_Laser.exe")
+            return driver
+        except Exception as e:
+            logging.log(e)
+    
+    def loginTest(self):
         try:
             driver = webdriver.WinAppDriver()
             driver.get("C:\\Program Files\\CE_Laser\\CE_Laser.exe")
@@ -20,7 +28,7 @@ class AutomationTest():
         except Exception as e:
             logging.log(e)
     
-    def ChangePass(self, driver):
+    def changePass(self, driver):
         try:
             driver.find_element_by_name("Forgot").click()
             driver.find_element_by_name("entry_account").send_keys("dat")
@@ -30,6 +38,12 @@ class AutomationTest():
         except Exception as e:
             logging.log(e)
         
+    def tracking(self, driver):
+        try:
+            driver.find_element_by_name("entry_account").send_keys("dat")
+        except Exception as e:
+            logging.log(e)
+    
     def initTest(self, size):
         for index in range(size):
             self.testcase[index] = self.initATest()
