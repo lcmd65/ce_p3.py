@@ -46,7 +46,7 @@ class AutomationTest():
         except Exception as e:
             logging.log(e)
     
-    def edit(self):
+    def editTest(self):
         try:
             driver = self.getAppDriver()
             driver.find_element_by_name("Edit").click()
@@ -54,6 +54,25 @@ class AutomationTest():
             driver.find_element_by_name("entry_password").send_keys("1")
             driver.find_element_by_name("Login").click()
             driver.find_element_by_name("OK").click()
+            logging.log("test pass")
+        except Exception as e:
+            logging.log(e)
+            
+    def trackingTest(self):
+        try:
+            driver = self.getAppDriver()
+            driver.find_element_by_name("P3A").click()
+            driver.find_element_by_name("Monitor").click()
+            logging.log("test pass")
+        except Exception as e:
+            logging.log(e)
+    
+    def viewTest(self):
+        try:
+            driver = self.getAppDriver()
+            driver.find_element_by_name("P3A").click()
+            driver.find_element_by_name("Monitor").click()
+            driver.find_element_by_name("View").click()
             logging.log("test pass")
         except Exception as e:
             logging.log(e)
