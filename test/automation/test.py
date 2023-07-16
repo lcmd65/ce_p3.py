@@ -38,12 +38,26 @@ class AutomationTest():
         except Exception as e:
             logging.log(e)
         
-    def tracking(self, driver):
+    def tracking(self):
         try:
+            driver = self.getAppDriver()
+            self.loginTest()
             driver.find_element_by_name("entry_account").send_keys("dat")
         except Exception as e:
             logging.log(e)
     
+    def edit(self):
+        try:
+            driver = self.getAppDriver()
+            driver.find_element_by_name("Edit").click()
+            driver.find_element_by_name("entry_account").send_keys("dat")
+            driver.find_element_by_name("entry_password").send_keys("1")
+            driver.find_element_by_name("Login").click()
+            driver.find_element_by_name("OK").click()
+            logging.log("test pass")
+        except Exception as e:
+            logging.log(e)
+        
     def initTest(self, size):
         for index in range(size):
             self.testcase[index] = self.initATest()
