@@ -1,4 +1,4 @@
-# unit test pylint log
+# unit test pylint log (format test)
 class unitTest():
     def __init__(self):
         self.testcase = []
@@ -11,4 +11,4 @@ class unitTest():
                 self.testcase.append(line)
                 self.size += 1
     
-    for 
+    def 

@@ -1,9 +1,9 @@
-import selenium 
+
 from selenium import webdriver
 import time 
 import logging
 
-# define automation test
+# define automation test selenium
 class AutomationTest():
     def __init__(self, size):
         self.testcase = []
