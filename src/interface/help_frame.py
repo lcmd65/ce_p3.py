@@ -12,17 +12,18 @@ class HelpFrame(Frame):
         self.initUI()
     
     def send_email(self, sender, recipient, subject, body):
-        server = smtplib.SMTP("smtp.gmail.com", 587)
-        server.ehlo()
-        server.starttls()
-        server.login(sender, "your_password")
-        message = MIMEMultipart()
-        message["From"] = sender
-        message["To"] = recipient
-        message["Subject"] = subject
-        message.attach(MIMEText(body, "plain"))
-        server.sendmail(sender, recipient, message.as_string())
-        
+        try:
+            server = smtplib.SMTP("smtp.gmail.com", 587)
+            server.ehlo()
+            server.starttls()
+            server.login(sender, "your_password")
+            message = MIMEMultipart()
+            message["From"] = sender
+            message["To"] = recipient
+            message["Subject"] = subject
+            message.attach(MIMEText(body, "plain"))
+        except: pass
+            
     def eventClickButtonOK(self, recipient, body):
         try:
             content = body.get()
