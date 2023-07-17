@@ -34,11 +34,11 @@ class ForgotFrame(Frame):
         self.frame_bg = Frame(self)
         self.frame_bg.pack(side = TOP, padx = 25, pady =50)
         
-        self.frame_panel = [None for _ in range(4)]
-        for index in range(4):
+        self.frame_panel = [None for _ in range(5)]
+        for index in range(5):
             self.frame_panel[index] = Frame(self.frame_bg)
             self.frame_panel[index].pack(fill = X, padx = 5, pady = 5)
-        self.frame_panel[5].pack(side = BOTTOM, expand= True)
+        self.frame_panel[4].pack(side = BOTTOM, expand= True)
         
         self.label_account = Label(self.frame_panel[0], text = "Username")
         self.label_account.pack(side = LEFT)
