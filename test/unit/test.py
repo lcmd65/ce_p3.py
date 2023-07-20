@@ -29,13 +29,13 @@ class FormatTest():
         y = [len(self.import_error), len(self.white_space_error), len(self.variable_error)]
         p = plt.bar(x, y)
         p.plot()
-
+    
 class TimeTest():
     def __init__(self):
         self.logTest()
     
     def logTest():
         run_terminate = "python3 -m memory_profiler src/main.py"
-   
+        
         
     
