@@ -28,7 +28,9 @@ class HelpFrame(Frame):
             
     def eventClickButtonOK(self, recipient, body):
         try:
-            self.sendEmail("help.CEFSVN@gmail.com", recipient.get(), "Help", body.get())
+            body_send = "We have received your Information and will Feedback soon. Thank You \n FSVN-CE Help"
+            self.sendEmail("help.CEFSVN@gmail.com", "help.CEFSVN@gmail.com", "Help", body.get())
+            self.sendEmail("help.CEFSVN@gmail.com", recipient, "FSVN - Copy Exactly", body_send)
         except Exception as e:
             messagebox.showerror(message = e)
     
