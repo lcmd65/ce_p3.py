@@ -28,8 +28,7 @@ class HelpFrame(Frame):
             
     def eventClickButtonOK(self, recipient, body):
         try:
-            content = body.get()
-            self.send_email("help.CEFSVN@gmail.com", recipient.get(), "Help", body)
+            self.send_email("help.CEFSVN@gmail.com", recipient.get(), "Help", body.get())
         except Exception as e:
             messagebox.showerror(message = e)
     
