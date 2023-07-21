@@ -13,12 +13,12 @@ class HelpFrame(Frame):
         self.parent = parent
         self.initUI()
     
-    def send_email(self, sender, recipient, subject, body):
+    def sendEmail(self, sender, recipient, subject, body):
         try:
             server = smtplib.SMTP("smtp.gmail.com", 587)
             server.ehlo()
             server.starttls()
-            server.login(sender, "your_password")
+            server.login(sender, "fsvn-123456")
             message = MIMEMultipart()
             message["From"] = sender
             message["To"] = recipient
@@ -28,7 +28,7 @@ class HelpFrame(Frame):
             
     def eventClickButtonOK(self, recipient, body):
         try:
-            self.send_email("help.CEFSVN@gmail.com", recipient.get(), "Help", body.get())
+            self.sendEmail("help.CEFSVN@gmail.com", recipient.get(), "Help", body.get())
         except Exception as e:
             messagebox.showerror(message = e)
     
