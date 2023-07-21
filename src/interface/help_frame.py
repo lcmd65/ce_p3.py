@@ -3,6 +3,8 @@ from tkinter import messagebox
 from functools import partial 
 import meta.external_var
 import email
+from email.mime.multipart import MIMEMultipart
+from email.mime.text import MIMEText
 import smtplib
 
 class HelpFrame(Frame):
