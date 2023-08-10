@@ -3,9 +3,11 @@ import threading
 import tksheet 
 from tkinter import *
 from tkinter import (
-    Button,
+    Menu,
+    filedialog,
     ttk,
     messagebox)
+from tkinter.ttk import Button
 from interface.ui_func import sequence
 from interface.loop_frame import LoopFrame
 from interface.help_frame import HelpFrame
@@ -14,13 +16,47 @@ from PIL import Image, ImageTk
 import backend.function.database as database
 import backend.function.compare as compare
 import gc
+import os
 
 ## UI of Laser python CE P3
 class LaserFrame(Frame):
     def __init__(self, parent):
         Frame.__init__(self, parent)
         self.parent = parent
+        self.editor = []
+        self.information = []
         self.initUI()
+        
+    def insert_node(self, parent, text, abspath):
+        node = self.tree.insert(parent, 'end', text=text, open=True)
+        if os.path.isdir(abspath):
+            self.nodes[node] = abspath
+            self.tree.insert(node, 'end')
+
+    def open_node(self):
+        node = self.tree.focus()
+        abspath = self.nodes.pop(node, None)
+        if abspath:
+            self.tree.delete(self.tree.get_children(node))
+            for p in os.listdir(abspath):
+                self.insert_node(node, p, os.path.join(abspath, p))
+                
+    def processDirectory(self, parent, path):
+        for p in os.listdir(path):
+            abspath = os.path.join(path, p)
+            isdir = os.path.isdir(abspath)
+            oid = self.tree.insert(parent, 'end', text=p, open = False)
+            if isdir:
+                self.processDirectory(oid, abspath)
+    
+    def eventButtonClickChangeDataSource(self, tree):
+        """
+        Button click in data source tree
+        """
+        self.datasource_path = filedialog.askdirectory()
+        abspath = os.path.abspath(self.datasource_path)
+        root_node = tree.insert("", 'end', text = abspath, open = True)
+        self.processDirectory(root_node, abspath)
     
     def processingCal(self, txt,type_check):
         database.processingConsistOfType(type_check)
@@ -89,7 +125,7 @@ class LaserFrame(Frame):
         meta.external_var.root_temp.destroy()
     
     # exit button ("EXIT") in button bar, function return to Login Frame 
-    def eventClickExit(self):
+    def eventButtonClickExit(self):
         try:
             meta.external_var.root.destroy()
             from interface.login_frame import LoginFrame
@@ -110,7 +146,7 @@ class LaserFrame(Frame):
             messagebox.showerror(message = e)
     
     # button "HELP" in button bar
-    def eventClickHelp(self):
+    def eventButtonClickHelp(self):
         gc.collect()
         meta.external_var.root_temp = Toplevel()
         meta.external_var.root_temp.geometry('600x600+200+200') 
@@ -134,26 +170,67 @@ class LaserFrame(Frame):
         if key == 1: return "A"
         elif key == 2: return "B"
         elif key == 3: return "C"
-    
+        
+    def selectItem(self, tree):
+        curItem = tree.focus()
+        print(tree.item(curItem))
+        node = tree.focus()
+        abspath = str(tree.item(node))
+        self.editor.append(abspath)
+        self 
+
+            
+
+        
     def initUI(self):
         self.parent.title("CE LASER P3")
         self.pack(fill=BOTH, expand=True)
         
+        self.label_privacy = Label(self, text = "First Solar privacy @2022", font=("Roboto", 12, "bold"))
+        self.label_privacy.pack(side = BOTTOM, fill = BOTH)
+        
         self.label_root = Label(self, i= meta.external_var.bg, bg = None)
         self.label_root.pack()
         
-        # button bar (consist of Exit, Edit, Help)
-        self.button_bar = Frame(self.label_root, bg= None)
-        self.button_bar.pack(side = TOP, fill = X)
-        self.button_bars = [ None for _ in range(4)]
-        for index, label_text, commands in zip(range(4), ["Exit", "File", "Edit", "Help"], [self.eventClickExit, None, self.eventButtonClickEdit, self.eventClickHelp]):
-            self.button_bars[index] = Button(self.button_bar, text = label_text, width= 10, command= commands, bg= None, image=None)
-            self.button_bars[index].config(bg= None, bd=0)
-            self.button_bars[index].pack(side = LEFT, fill = BOTH)
+        self.home_menu = Menu(self.parent)
+        """
+        File menu
+        """
+        file_menu = Menu(self.home_menu)
+        file_menu.add_command(label="New", command = None)
+        file_menu.add_command(label="Open", command = None)
+        file_menu.add_separator()
+        file_menu.add_command(label= "Exit", command = partial(self.eventButtonClickExit))
+        
+        """ 
+        Edit menu 
+        """
+        edit_menu = Menu(self.home_menu)
+        edit_menu.add_command(label="Edit environment", command = partial(self.eventButtonClickEdit))
+        
+        """ 
+        Help menu 
+        """
+        help_menu = Menu(self.home_menu)
+        help_menu.add_command(label = "Help", command = partial(self.eventButtonClickHelp))
+        
+        for index, label_text, commands in zip(range(1, 4), ["File", "Edit", "Help"], [file_menu, edit_menu, help_menu]):
+            self.home_menu.add_cascade(label= label_text, menu = commands)
         
         # Notebook include tab home, laser P3A to C
         self.notebook_control = ttk.Notebook(self.label_root)
-        self.notebook_control.pack(expand= True, fill=BOTH, padx=5, pady= 20)
+        self.notebook_control.pack(expand= True, fill=BOTH, padx=10, pady= 0)
+        
+        self.noteStyle = ttk.Style()
+        self.noteStyle.configure('TNotebook', tabposition='wn')
+        self.noteStyle.theme_use('default')
+        self.noteStyle.configure("TNotebook", background= "#001c54", borderwidth = 0)
+        self.noteStyle.configure("TNotebook.Tab", background = "#001c54", foreground = "#ececec", borderwidth = 0)
+        self.noteStyle.map("TNotebook", background= [("selected", "#ececec")] )
+        self.noteStyle.map("TNotebook.Tab", foreground = [("selected", "black")])
+        
+        buttonStyle = ttk.Style()
+        buttonStyle.configure('W.TButton', background = "#ececec", foreground = 'black')
         
         # init tab control 
         self.tab_controls = [None for _ in range(4)]
@@ -192,13 +269,72 @@ class LaserFrame(Frame):
                     partial(self.eventExitRoot),
                 ]
                 for se_index, button_text, command_ in zip(range(4), ["Machine CE Monitor", "View CE", "Auto Monitor", "End Auto"], commands):
-                    self.button_controls[index][se_index] = Button(self.body_controls[index][0], text= button_text, width=25, command = command_)
+                    self.button_controls[index][se_index] = Button(self.body_controls[index][0], text= button_text, style ='W.TButton', width=15, padding= 2, command = command_)
                     self.button_controls[index][se_index].pack(side=LEFT, padx=5, pady=5)
             
-            # tab home define
+            # tab home defineb
             elif index == 0:
-                self.body_controls[index] = Frame(self.tab_controls[index])
-                self.body_controls[index].pack(fill= X, padx=5 ,pady=5)
-                self.button_controls[index] = Button(self.body_controls[index], text="Analyze", width=10, command = sequence(self.eventClickHome))
-                self.button_controls[index].pack(side=LEFT, padx=5, pady=5)
+                """ 
+                UI 2 monitor: tree view and processing
+                """
+                self.body_controls[index] = [None for _ in range(3)]
+                """ 
+                Tree view for open and browse data
+                """
+                self.body_controls[index][0] = Frame(self.tab_controls[index])
+                self.body_controls[index][0].pack(fill= Y, padx = 0 ,pady = 5, side = LEFT)
+                """ 
+                Tree view for open and browse segment
+                """
+                self.body_controls[index][2] = Frame(self.tab_controls[index])
+                self.body_controls[index][2].pack(fill= Y, padx = 0 ,pady = 5, side = RIGHT)
+                """
+                View for processing data 
+                """
+                self.body_controls[index][1] = Frame(self.tab_controls[index])
+                self.body_controls[index][1].pack(fill= Y, padx = 0 ,pady = 5, side = LEFT)
+                
+                self.body_control_processing = [None for _ in range(3)]
+                for second_index in range(3):
+                    self.body_control_processing[second_index] = Frame(self.body_controls[index][1])
+                    self.body_control_processing[second_index].pack(fill= BOTH, padx = 0 ,pady = 5)
+                    
+                self.tree = ttk.Treeview(self.body_controls[index][0])
+                ysb = ttk.Scrollbar(self.body_controls[index][0], orient='vertical', command=self.tree.yview)
+                xsb = ttk.Scrollbar(self.body_controls[index][0], orient='horizontal', command=self.tree.xview)
+                self.tree.configure(yscroll = ysb.set, xscroll = xsb.set, height= 38)
+                self.tree.heading('#0', text='Data Source', anchor='n', command= partial(self.eventButtonClickChangeDataSource, self.tree))
+                
+                abspath = os.path.abspath("data/data_source")
+                root_node = self.tree.insert("", 'end', text = abspath, open = True)
+                self.processDirectory(root_node, abspath)
+                xsb.pack(fill = X, side = BOTTOM)
+                ysb.pack(fill = Y, side = RIGHT)
+                self.tree.pack(fill = Y)
+                
+                self.button_browse = Button(self.body_controls[index][0], style ='W.TButton', text = "Select", command = partial(self.selectItem, self.tree))
+                self.button_browse.pack(fill = X, side = BOTTOM)
+                
+                self.segment_tab = ttk.Treeview(self.body_controls[index][2])
+                self.segment_tab.heading('#0', text='Information', anchor='n')
+                self.segment_tab.pack(fill = Y, side = BOTTOM)
+                
+                self.segment_param_tab = ttk.Treeview(self.body_controls[index][2])
+                self.segment_param_tab.heading('#0', text='Data Control Plan', anchor='n')
+                self.segment_param_tab.configure(height= 30)
+                self.segment_param_tab.pack(fill = Y, side = TOP)
+                
+                self.sheet_view_home = tksheet.Sheet(self.body_controls[index][1], height=1080, width=1980,  data = [[]])
+                self.sheet_view_home.pack(fill = BOTH, side = TOP, padx=5, pady = 0, expand=True)
+                self.sheet_view_home.enable_bindings()
+                
+                
+                
+if __name__ == "__main__":
+                meta.external_var.root = Tk()
+                meta.external_var.bg = ImageTk.PhotoImage(Image.open('data/images/FS_image.png'))
+                meta.external_var.root.geometry('1200x1000+300+0') 
+                app_laser = LaserFrame(meta.external_var.root)
+                meta.external_var.root.mainloop()  
 
+## python3 interface/laser_frame.py

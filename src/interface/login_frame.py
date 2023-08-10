@@ -53,44 +53,46 @@ class LoginFrame(Frame):
         
         self.tab_control = Notebook(self.label,  height= 400, width= 250)
         self.tab_control.pack(expand = False, anchor= "center", padx =400, pady = 175, ipadx = 10, ipady=100 )
+        noteStyle = Style()
+        noteStyle.layout("TNotebook.Tab", [])
         
         self.tab_panel = Frame(self.tab_control, width= 100)
         self.tab_panel.pack(fill = X, side = TOP, padx=0,  pady=20)
         self.tab_control.add(self.tab_panel, padding= 5)
         
-        self.frame_panel = [None for _ in range(7)]
+        self.frame_login = [None for _ in range(7)]
         for index in range(7):
-            self.frame_panel[index] = Frame(self.tab_panel)
-            self.frame_panel[index].pack(fill =X, padx = 10, side =BOTTOM)
-        self.frame_panel[0].pack(pady = 20)
-        self.frame_panel[5].pack(fill =X, padx = 110, pady =10, side =TOP)
-        self.frame_panel[6].pack(fill =X, padx = 50, pady =10, side =TOP)
+            self.frame_login[index] = Frame(self.tab_panel)
+            self.frame_login[index].pack(fill =X, padx = 10, side =BOTTOM)
+        self.frame_login[0].pack(pady = 20)
+        self.frame_login[5].pack(fill =X, padx = 110, pady =10, side =TOP)
+        self.frame_login[6].pack(fill =X, padx = 50, pady =10, side =TOP)
         
         # account widget
-        self.label_account = Label(self.frame_panel[4], text = "Username", font = ("Calibri", 11))
+        self.label_account = Label(self.frame_login[4], text = "Username", font = ("Calibri", 11))
         self.label_account.pack(side = TOP, padx =5, pady =5)
        
-        self.entry_account = Entry(self.frame_panel[3])
+        self.entry_account = Entry(self.frame_login[3])
         self.entry_account.pack(fill = X , padx =5, pady =5)
         
         # password widget
-        self.label_password = Label(self.frame_panel[2], text = "Password", font =("Calibri", 11))
+        self.label_password = Label(self.frame_login[2], text = "Password", font =("Calibri", 11))
         self.label_password.pack(side = TOP, padx =5, pady =5)
         
-        self.entry_password = Entry(self.frame_panel[1])
+        self.entry_password = Entry(self.frame_login[1])
         self.entry_password.pack(fill = X, padx = 5, pady = 5)
         self.entry_password.config(show="*")
         
-        self.button_login = Button(self.frame_panel[0], text = "Sign In", command= partial(self.eventClickButtonLogin, self.entry_account, self.entry_password))
+        self.button_login = Button(self.frame_login[0], text = "Sign In", command= partial(self.eventClickButtonLogin, self.entry_account, self.entry_password))
         self.button_login.pack(side = RIGHT, fill = BOTH, padx =5 ,pady =5)
 
-        self.button_forgot = Button(self.frame_panel[0], text = "Forgot password", command = self.eventClickButtonForgotPass)
+        self.button_forgot = Button(self.frame_login[0], text = "Forgot password", command = self.eventClickButtonForgotPass)
         self.button_forgot.pack(side = LEFT,fill = BOTH, padx= 5, pady =5) 
         
-        self.label_logo = Label(self.frame_panel[5], i= meta.external_var.logo)
+        self.label_logo = Label(self.frame_login[5], i= meta.external_var.logo)
         self.label_logo.pack(fill = BOTH, side = TOP, anchor= "center")
         
-        self.label_password = Label(self.frame_panel[6], text = "Login", font =("Calibri", 12, 'bold'))
+        self.label_password = Label(self.frame_login[6], text = "Login", font =("Calibri", 12, 'bold'))
         self.label_password.pack(side = TOP)
 
 class LoginFrameAccuracy(LoginFrame):

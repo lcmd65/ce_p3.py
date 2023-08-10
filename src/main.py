@@ -1,7 +1,6 @@
 import meta.external_var
 import gc
 import keyboard
-import mouse
 import time
 import sys
 from tkinter import Tk, messagebox
@@ -19,12 +18,14 @@ def sequence(*functions):
     return func
 
 def getTimeSinceLastMouseEvent():
-    now = time.time()
-    timestamp = mouse.get_last_mouse_event_timestamp()
-    if timestamp is not None:
-        return now - timestamp
-    else:
-        return None
+    try:
+        now = time.time()
+        timestamp = mouse.get_last_mouse_event_timestamp()
+        if timestamp is not None:
+            return now - timestamp
+        else:
+            return None
+    except: pass
 
 def getTimeSinceLastKeyboardEvent():
     now = time.time()
