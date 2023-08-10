@@ -93,4 +93,12 @@ def pushDatabaseActual(df,type):
                 str(df.iloc[index, 7])))
             cnxn.commit()
     cnxn.close()
+    
+    
+def processingConsistOfTypeAndFile(type, path_list):
+    df = controlPlanGet(type)
+    for path in path_list:
+        xml.parseParaXMLDB(path, df)
+    return df
+    
 ## python3 function/function_database.py

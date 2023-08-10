@@ -23,7 +23,10 @@ class LaserFrame(Frame):
     def __init__(self, parent):
         Frame.__init__(self, parent)
         self.parent = parent
+        self.nodes = dict()
+        self.radio_value = IntVar()
         self.editor = []
+        self.path = []
         self.information = []
         self.initUI()
         
@@ -46,6 +49,8 @@ class LaserFrame(Frame):
             abspath = os.path.join(path, p)
             isdir = os.path.isdir(abspath)
             oid = self.tree.insert(parent, 'end', text=p, open = False)
+            self.nodes[oid] = abspath
+            print(self.nodes[oid])
             if isdir:
                 self.processDirectory(oid, abspath)
     
@@ -53,6 +58,8 @@ class LaserFrame(Frame):
         """
         Button click in data source tree
         """
+        for i in tree.get_children():
+            tree.delete(i)
         self.datasource_path = filedialog.askdirectory()
         abspath = os.path.abspath(self.datasource_path)
         root_node = tree.insert("", 'end', text = abspath, open = True)
@@ -97,6 +104,16 @@ class LaserFrame(Frame):
     def eventViewData(self, txt, sheet, type_check):
         df = database.processingUnpush(type_check)
         sheet.set_sheet_data(data = df.values.tolist(),\
+                            reset_col_positions = True,\
+                            reset_row_positions = True,\
+                            redraw = True,\
+                            verify = False,\
+                            reset_highlights = False)
+        self.eventTriggerData(sheet)
+    
+    #view in home
+    def eventViewDataHome(self, sheet, data):
+        sheet.set_sheet_data(data = data.values.tolist(),\
                             reset_col_positions = True,\
                             reset_row_positions = True,\
                             redraw = True,\
@@ -171,16 +188,32 @@ class LaserFrame(Frame):
         elif key == 2: return "B"
         elif key == 3: return "C"
         
-    def selectItem(self, tree):
-        curItem = tree.focus()
-        print(tree.item(curItem))
+    def selectItem(self, tree, information_tab, editor_tab):
         node = tree.focus()
-        abspath = str(tree.item(node))
+        abspath = self.nodes[str(node)]
+        self.path.append(abspath)
         self.editor.append(abspath)
-        self 
-
-            
-
+        editor_tab.insert("", 'end', text = str(abspath), open = True)
+        for i in information_tab.get_children():
+            information_tab.delete(i)
+        information_tab.insert("", 'end', text= os.path.getsize(abspath), open = True)
+        information_tab.insert("", 'end', text= os.path.getmtime(abspath), open = True)
+        information_tab.insert("", 'end', text= os.path.getctime(abspath), open = True)
+        
+    def clearWorkspace(self, information_tab, editor_tab):
+        for i in information_tab.get_children():
+            information_tab.delete(i)
+        for i in editor_tab.get_children():
+            editor_tab.delete(i)
+        self.editor.clear()
+        self.information.clear()
+        self.path.clear()
+    
+    def eventButtonClickProcessingHome(self, sheet_view, radio):
+        type_ = self.tranferString(radio.get())
+        df = database.processingConsistOfTypeAndFile(type_, self.path)
+        self.eventViewDataHome(sheet_view, df)
+        
         
     def initUI(self):
         self.parent.title("CE LASER P3")
@@ -270,7 +303,7 @@ class LaserFrame(Frame):
                 ]
                 for se_index, button_text, command_ in zip(range(4), ["Machine CE Monitor", "View CE", "Auto Monitor", "End Auto"], commands):
                     self.button_controls[index][se_index] = Button(self.body_controls[index][0], text= button_text, style ='W.TButton', width=15, padding= 2, command = command_)
-                    self.button_controls[index][se_index].pack(side=LEFT, padx=5, pady=5)
+                    self.button_controls[index][se_index].pack(side = LEFT, padx = 5, pady = 5)
             
             # tab home defineb
             elif index == 0:
@@ -312,23 +345,31 @@ class LaserFrame(Frame):
                 ysb.pack(fill = Y, side = RIGHT)
                 self.tree.pack(fill = Y)
                 
-                self.button_browse = Button(self.body_controls[index][0], style ='W.TButton', text = "Select", command = partial(self.selectItem, self.tree))
-                self.button_browse.pack(fill = X, side = BOTTOM)
+                self.segment_param_tab = ttk.Treeview(self.body_controls[index][2])
+                self.segment_param_tab.heading('#0', text='Data Control Plan', anchor='n')
+                self.segment_param_tab.configure(height= 28)
+                self.segment_param_tab.pack(fill = Y, side = TOP)
                 
                 self.segment_tab = ttk.Treeview(self.body_controls[index][2])
                 self.segment_tab.heading('#0', text='Information', anchor='n')
-                self.segment_tab.pack(fill = Y, side = BOTTOM)
+                self.segment_tab.pack(fill = Y, side = TOP)
                 
-                self.segment_param_tab = ttk.Treeview(self.body_controls[index][2])
-                self.segment_param_tab.heading('#0', text='Data Control Plan', anchor='n')
-                self.segment_param_tab.configure(height= 30)
-                self.segment_param_tab.pack(fill = Y, side = TOP)
+                self.button_browse = Button(self.body_controls[index][0], style ='W.TButton', text = "Select", command = partial(self.selectItem, self.tree, self.segment_tab, self.segment_param_tab))
+                self.button_browse.pack(fill = X, side = BOTTOM)
                 
-                self.sheet_view_home = tksheet.Sheet(self.body_controls[index][1], height=1080, width=1980,  data = [[]])
+                self.button_clear = Button(self.body_controls[index][2], style ='W.TButton', text = "Clear Workspace", command = partial(self.clearWorkspace, self.segment_param_tab, self.segment_tab))
+                self.button_clear.pack(fill = Y, side = BOTTOM)
+                
+                self.sheet_view_home = tksheet.Sheet(self.body_control_processing[0], height=770, width=1980,  data = [[]])
                 self.sheet_view_home.pack(fill = BOTH, side = TOP, padx=5, pady = 0, expand=True)
                 self.sheet_view_home.enable_bindings()
                 
-                
+                self.radio_list = [None for _ in range(3)]
+                for second_index, text_ in zip(range(3), ["P3A", "P3B", "P3C"]):
+                    self.radio_list[second_index] = Radiobutton(self.body_control_processing[1], text= text_, variable = self.radio_value, value = second_index +1)
+                    self.radio_list[second_index].pack(fill = Y, side = LEFT, padx= 5)
+                self.button_running_home = Button(self.body_control_processing[1], style ='W.TButton', text = "Run", width= 20 , command = partial(self.eventButtonClickProcessingHome, self.sheet_view_home,self.radio_value))
+                self.button_running_home.pack(fill = X, side = RIGHT, padx = 5)
                 
 if __name__ == "__main__":
                 meta.external_var.root = Tk()
