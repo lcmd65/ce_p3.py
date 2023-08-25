@@ -1,5 +1,6 @@
 # Documentation
-<img width="1331" alt="Screenshot 2023-08-25 at 17 24 23" src="https://github.com/DatMinhLeChon/ce_p3.py/assets/93373784/554f6777-374e-44be-b538-b98a41f3f732">
+
+<img width="1383" alt="Screenshot 2023-08-25 at 17 25 00" src="https://github.com/DatMinhLeChon/ce_p3.py/assets/93373784/ce5221e7-cada-41f8-8bf8-3460ce5069ab">
 
 
 In this application, We have named multiple module and tkinter variable (IntVar ...) variable is global variables because we will be using these variables in different parts of the program. We were aware of putting the same font for all the widgets in a program that is why value with font name and size is stored in a simple letter. And later used this letter to assign a font to an application text.
