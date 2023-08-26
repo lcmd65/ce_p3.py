@@ -1,6 +1,6 @@
 # Documentation
 
-<img width="451" alt="image" src="https://github.com/DatMinhLeChon/ce_p3.py/assets/93373784/431d9189-eb9f-460f-b77a-87dd5b007791">
+<img width="851" alt="image" src="https://github.com/DatMinhLeChon/ce_p3.py/assets/93373784/431d9189-eb9f-460f-b77a-87dd5b007791">
 
 
 
