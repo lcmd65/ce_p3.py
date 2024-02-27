@@ -1,10 +1,11 @@
 import meta.external_var
 import gc
 import keyboard
+import mouse
 import time
 import sys
 from tkinter import Tk, messagebox
-from interface.login_frame import LoginFrame
+from template.login_frame import LoginFrame
 from PIL import Image, ImageTk
 
 sys.setrecursionlimit(1000000)

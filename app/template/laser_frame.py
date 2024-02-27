@@ -8,13 +8,13 @@ from tkinter import (
     ttk,
     messagebox)
 from tkinter.ttk import Button
-from interface.ui_func import sequence
-from interface.loop_frame import LoopFrame
-from interface.help_frame import HelpFrame
+from template.ui_func import sequence
+from template.loop_frame import LoopFrame
+from template.help_frame import HelpFrame
 from functools import partial
 from PIL import Image, ImageTk
-import backend.function.database as database
-import backend.function.compare as compare
+import function.event.database as database
+import function.event.compare as compare
 import gc
 import os
 
@@ -145,7 +145,7 @@ class LaserFrame(Frame):
     def eventButtonClickExit(self):
         try:
             meta.external_var.root.destroy()
-            from interface.login_frame import LoginFrame
+            from template.login_frame import LoginFrame
             meta.external_var.root = Tk()
             meta.external_var.root.geometry('1200x1000+300+0') 
             meta.external_var.bg = ImageTk.PhotoImage(Image.open('data/images/FS_image1.png').resize((1920, 1080)))
@@ -173,7 +173,7 @@ class LaserFrame(Frame):
     # button Edit data in button bar
     def eventButtonClickEdit(self):
         if meta.external_var.roll == "A":
-            from interface.login_frame import LoginFrameAccuracy 
+            from template.login_frame import LoginFrameAccuracy 
             gc.collect()
             meta.external_var.root_temp = Toplevel()
             meta.external_var.root_temp.geometry('600x800+200+200') 
@@ -378,4 +378,4 @@ if __name__ == "__main__":
                 app_laser = LaserFrame(meta.external_var.root)
                 meta.external_var.root.mainloop()  
 
-## python3 interface/laser_frame.py
+## python3 template/laser_frame.py

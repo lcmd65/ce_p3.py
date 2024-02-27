@@ -1,8 +1,8 @@
 from tkinter import *
 from tkinter import messagebox
 from functools import partial
-from interface.ui_func import stopAllProcesingToFile
-import backend.const
+from template.ui_func import stopAllProcesingToFile
+import function.const
 import threading
 
 class EditFrame(Frame):
@@ -15,7 +15,7 @@ class EditFrame(Frame):
     def eventButtonChangeVariableClick(self, text, entries):
         try:
             for index in range(len(entries)):
-                backend.const.jsonChange(text[index], entries[index].get())
+                function.const.jsonChange(text[index], entries[index].get())
             messagebox.showinfo(title="Message", message="Success")
         except Exception as e:
             print(e)
@@ -64,7 +64,7 @@ class EditFrame(Frame):
             self.frames[index] = Frame(self.panel_button)
             self.labels[index] = Label(self.frames[index], text = label)
             self.entries[index] = Entry(self.frames[index])
-            self.entries[index].insert(0, backend.const.jsonConst()[label])
+            self.entries[index].insert(0, function.const.jsonConst()[label])
             
             self.labels[index].pack(side = LEFT, fill = X)
             self.entries[index].pack(side = TOP, fill = X)

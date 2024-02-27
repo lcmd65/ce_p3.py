@@ -1,10 +1,10 @@
 from tkinter import *
 from tkinter.ttk import *
 from tkinter import messagebox
-from interface.forgot_frame import ForgotFrame
-from interface.edit_frame import EditFrame
+from template.forgot_frame import ForgotFrame
+from template.edit_frame import EditFrame
 from functools import partial
-import backend.function.user_authen as user_authen
+import function.event.user_authen as user_authen
 from PIL import Image, ImageTk
 import meta.external_var
 
@@ -22,7 +22,7 @@ class LoginFrame(Frame):
             if user_authen.authenticantionUser(meta.external_var.username, meta.external_var.password) == False:
                 messagebox.showinfo(message = "Wrong password or username")
             elif user_authen.authenticantionUser(meta.external_var.username, meta.external_var.password) == True:
-                from interface.laser_frame import LaserFrame
+                from template.laser_frame import LaserFrame
                 meta.external_var.root.destroy()
                 meta.external_var.root = Tk()
                 meta.external_var.bg = ImageTk.PhotoImage(Image.open('data/images/FS_image.png'))

@@ -1,0 +1,6 @@
+tkinter
+pyqt6
+pyside6
+tksheet 
+threading
+PIL
