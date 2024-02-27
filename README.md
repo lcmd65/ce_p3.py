@@ -2,10 +2,6 @@
 
 <img width="1084" alt="image" src="https://github.com/DatMinhLeChon/ce_p3.py/assets/93373784/f1ad7308-971a-42ca-b4a0-ea5ca8902214">
 
-
-- In this application, We have named multiple module and tkinter variable (IntVar ...) variable is global variables because we will be using these variables in different parts of the program. 
-- We were aware of putting the same font for all the widgets in a program that is why value with font name and size is stored in a simple letter. And later used this letter to assign a font to an application text.
-
 ### Requirement
     requirements.txt
   
@@ -31,5 +27,10 @@
     * Use
   
     <img width="400" alt="image" src="https://github.com/DatMinhLeChon/CE.P3_LASER.Py/assets/93373784/3d010900-cb1d-4721-99a9-193f64b29a82">
+
+
+    - In this application, We have named multiple module and tkinter variable (IntVar ...) variable is global variables because we will be using these variables in different parts of the program.
+      
+    - We were aware of putting the same font for all the widgets in a program that is why value with font name and size is stored in a simple letter. And later used this letter to assign a font to an application text.
 
   
