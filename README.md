@@ -7,7 +7,7 @@
 - We were aware of putting the same font for all the widgets in a program that is why value with font name and size is stored in a simple letter. And later used this letter to assign a font to an application text.
 
 ### Requirement
-    requirement.txt
+    requirements.txt
   
 ### Interface
 
